@@ -22,6 +22,7 @@ description: "Use when adding or fixing JEE Main, AIEEE, IIT-JEE or JEE Advanced
   - JEE Main offline: `JM{yyyymmdd}0P{n}` (shift digit 0, next free number for that date).
   - AIEEE: `AIEEE{yyyy}{MMdd}0{rest}` (example `AIEEE2012P71` becomes `AIEEE201204290P71`). Archive records (`PYQARC-...`) with a newly known date become `AIEEE{yyyy}{MMdd}0P{n}` with the next free n over all AIEEE ids, `qno` left empty unless the official number is known.
   - IIT before 2003: `IIT{yyyy}...` form (ids carry a two-letter chapter code: II, AR, DI, FA).
+  - IIT-JEE 2012: `IIT20120408{paper}Q{qn}` (e.g. `IIT201204081Q41`..`Q60` for Paper 1, `IIT201204082Q41`..`Q60` for Paper 2).
 - Update the id in `qb/data/pyq.json`, `bank.json` (`i`, and `p` for the paper) and `must.json` (`r` and `m`), check the `flags` and `explanations` collections for the old id, and check ids stay unique.
 - Clear any note that says 'Shift not given in the source sheet.' once the date is applied.
 - When a question moves to another chapter, rename the chapter letters in its id too (II = Indefinite Integration, AR = area under the curve, DI = definite integration).
