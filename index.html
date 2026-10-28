@@ -1723,7 +1723,7 @@ function createMiniPptx() {
 /* ---------- Avanti Fellows Dark Slide Deck (buildCwPptx) ---------- */
 async function buildCwPptx(PptxGenJS, JSZip, d, H) {
   H = H || {};
-  const BLACK = '000000', NAVYC = '1B2A41', CORAL = 'E8573E', TEAL = '2A9D8F', GRAYC = '9CA3AF', LIME = '9BE15D', YEL = 'F4D35E', WHITE = 'FFFFFF', GREEN = '4ADE80', RED = 'EF4444';
+  const BLACK = '000000', NAVYC = '1B2A41', CORAL = 'E8573E', TEAL = '2A9D8F', GRAYC = '9CA3AF', LIME = '9BE15D', YEL = 'F4D35E', WHITE = 'FFFFFF', GREEN = '4ADE80', RED = 'EF4444', PURPLE = 'A855F7';
   const LVC = { L1: GREEN, L2: YEL, L3: RED };
   const FH = 'Georgia', FB = 'Arial', FQ = 'Times New Roman';
   const QFS = 24;
@@ -1848,8 +1848,8 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
   const yrs = Object.keys(d.years || {}).map(Number).filter(Boolean).sort((a, b) => a - b);
   const chNum = d.cc ? d.cc.split('M')[1] : '';
   const clLabel = d.clLabel || ('CLASS ' + (d.cl || '11 & 12'));
-  const chLabel = d.chLabel || (chNum ? 'CHAPTER ' + chNum : 'JEE MATHEMATICS');
-  const kindLabel = d.kindLabel || ((d.bucketName || 'JEE Main') + ' PYQs');
+  const chLabel = d.chLabel || (chNum ? 'CHAPTER ' + chNum : (d.bucket === 'KCET' ? 'KCET MATHEMATICS' : 'JEE MATHEMATICS'));
+  const kindLabel = d.kindLabel || ((d.bucketName || (d.bucket === 'KCET' ? 'KCET' : 'JEE Main')) + ' PYQs');
   const yearLabel = d.year === 'all' ? (yrs.length ? 'All years · ' + yrs[0] + '–' + yrs[yrs.length - 1] : 'All years') : String(d.year || 'All years');
   const logoData = (d.logo && d.logo.dataUrl) || (root.QB_LOGO_B64 ? 'data:image/png;base64,' + root.QB_LOGO_B64 : null);
   const logoW = (d.logo && d.logo.w) || root.QB_LOGO_W || 480;
@@ -1965,17 +1965,31 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
 
   /* 4+. One Question Per Slide (Strict 24pt font, Smart Given vs To-Find math coloring, aligned left Coral bar) */
   const ansText = q => /^[A-D](,\s*[A-D])*$/.test(q.a || '') ? q.a.split(/,\s*/).map(l => '(' + l + ')').join(', ') : (q.a || '—');
-  const exam0 = d.bucket === 'Adv' ? ['JEE ADVANCED', RED] : ['JEE MAINS', GREEN];
-  const examOf = q => d.perQ ? (q.s === 'P' ? (q.e === 'Adv' ? ['JEE ADVANCED', RED] : ['JEE MAINS', GREEN]) : ['PRACTICE · ' + String(q.pb || 'AVANTI').toUpperCase(), TEAL]) : exam0;
+  const exam0 = d.bucket === 'Adv' ? ['JEE ADVANCED', RED] : (d.bucket === 'KCET' ? ['KCET', PURPLE] : ['JEE MAINS', GREEN]);
+  const examOf = q => {
+    const qid = String(q.i || q.id || '');
+    const pm = (d.meta && (d.meta[qid] || d.meta[q.i] || d.meta[q.id])) || {};
+    const exName = q.ex || q.exam || pm.exam || (qid.startsWith('KCET') ? 'KCET' : (qid.startsWith('JA') || qid.startsWith('IIT') ? 'JEE Advanced' : (qid.startsWith('AIEEE') ? 'AIEEE' : '')));
+    if (exName === 'KCET' || q.e === 'KCET' || d.bucket === 'KCET' || /\bKCET\b/i.test(String(q.p || pm.paper || ''))) return ['KCET', PURPLE];
+    if (exName === 'AIEEE' || q.e === 'AIEEE' || /\bAIEEE\b/i.test(String(q.p || pm.paper || ''))) return ['AIEEE', GREEN];
+    if (d.perQ) {
+      if (q.s === 'P' || q.source === 'PYQ') {
+        if (q.e === 'Adv' || exName === 'JEE Advanced' || exName === 'IIT' || /\b(JEE Advanced|IIT)\b/i.test(String(q.p || pm.paper || ''))) return ['JEE ADVANCED', RED];
+        return ['JEE MAINS', GREEN];
+      }
+      return ['PRACTICE · ' + String(q.pb || q.publisher || 'AVANTI').toUpperCase(), TEAL];
+    }
+    return exam0;
+  };
 
   (d.qs || []).forEach(q => {
     const exam = examOf(q), practice = d.perQ && q.s !== 'P';
     const s = pptx.addSlide();
     s.background = { color: BLACK };
-    const pm = (d.meta && d.meta[q.i]) || {}, pStr = String(pm.paper || q.p || '');
+    const pm = (d.meta && (d.meta[q.i] || d.meta[q.id])) || {}, pStr = String(pm.paper || q.p || '');
     const dm = /\d{1,2} [A-Za-z]{3} \d{4}/.exec(pStr), sd = /^(\d{4})-(\d{2})-(\d{2})/.exec(pm.sort_date || '');
     const date = dm ? dm[0] : sd && sd[2] !== '00' ? new Date(+sd[1], +sd[2] - 1, +sd[3]).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-    const shift = pStr.replace(/\d{1,2} [A-Za-z]{3} \d{4}/, '').replace(/IIT-JEE|JEE (Main|Advanced)|AIEEE/g, '').replace(/\b(19|20)\d{2}\b/g, '').replace(/\s+/g, ' ').trim();
+    const shift = pStr.replace(/\d{1,2} [A-Za-z]{3} \d{4}/, '').replace(/IIT-JEE|JEE (Main|Advanced)|AIEEE|KCET/gi, '').replace(/\b(19|20)\d{2}\b/g, '').replace(/\s+/g, ' ').trim();
     const when = [date || (q.y ? String(q.y) : ''), shift].filter(Boolean).join(' · ');
     const pillText = practice ? exam[0] : (when ? exam[0] + ' · ' + when : exam[0]);
     const pillW = Math.min(7.8, Math.max(2.2, 0.5 + pillText.length * 0.135));
@@ -2093,15 +2107,19 @@ async function buildPptx(PptxGenJS, JSZip, pages, H) {
     tm.set(tName, (tm.get(tName) || 0) + 1);
   });
   const topics = [...tm.entries()].map(([name, n]) => ({ name, n }));
+  const ex = [...new Set(allQs.filter(q => q.s === 'P').map(q => q.ex || q.e || q.exam))];
+  const isKcet = ex.length === 1 && ex[0] === 'KCET';
+  const isAdv = ex.length === 1 && ex[0] === 'Adv';
+  const bucket = isKcet ? 'KCET' : (isAdv ? 'Adv' : 'Main');
   const d = {
-    chapter: p0.title || (c0 ? c0.n : 'JEE Mathematics'),
+    chapter: p0.title || (c0 ? c0.n : (isKcet ? 'KCET Mathematics' : 'JEE Mathematics')),
     cl: c0 ? c0.cl : '11 & 12',
     cc: one ? ccs[0] : '',
-    clLabel: c0 ? 'CLASS ' + c0.cl : 'JEE MATHS',
-    chLabel: one && ccs[0].indexOf('M') >= 0 ? 'CHAPTER ' + ccs[0].split('M')[1] : (p0.badge || 'PRACTICE & PYQs'),
-    bucket: 'Main',
-    bucketName: p0.sub || 'JEE Mathematics',
-    kindLabel: p0.sub || 'JEE Mathematics',
+    clLabel: c0 ? 'CLASS ' + c0.cl : (isKcet ? 'KCET MATHS' : 'JEE MATHS'),
+    chLabel: one && ccs[0].indexOf('M') >= 0 ? 'CHAPTER ' + ccs[0].split('M')[1] : (p0.badge || (isKcet ? 'KCET PYQs' : 'PRACTICE & PYQs')),
+    bucket: bucket,
+    bucketName: p0.sub || (isKcet ? 'KCET Mathematics' : 'JEE Mathematics'),
+    kindLabel: p0.sub || (isKcet ? 'KCET PYQs' : 'JEE Mathematics'),
     perQ: true,
     year: 'all',
     count: allQs.length,
@@ -2360,7 +2378,7 @@ function sheetParams() {
   return { mode: 'test', kind: 'test', title: S.title.trim() || defaultTitle(), sub: n.length ? (n.length > 2 ? n.length + ' chapters' : n.join(' \u00b7 ')) : 'Maths', batch: S.batch.trim(), date: S.date, mins: S.mins, pos: S.pos, neg: S.neg,
     cols: S.cols, tag: S.tag, key: S.key, qs: S.picked.map(id => BYID.get(id)).filter(Boolean) };
 }
-function tagText(q) { return q.s === 'P' ? '[JEE ' + (q.e === 'Adv' ? 'Advanced' : 'Main') + ' ' + q.y + ']' : ''; }
+function tagText(q) { return q.s === 'P' ? '[' + (q.ex || (q.e === 'Adv' ? 'JEE Advanced' : (q.e === 'KCET' || String(q.i || '').startsWith('KCET') ? 'KCET' : 'JEE Main'))) + ' ' + (q.y || '') + ']' : ''; }
 /* "match the lists" questions: split into intro + two lists so they can be drawn as a table */
 function matchParts(text) {
   const ls = String(text).split('\n'), re1 = /^\s*(List|Column)[\s-]*(I|1)\s*:?\s*$/i, re2 = /^\s*(List|Column)[\s-]*(II|2)\s*:?\s*$/i;
@@ -2859,7 +2877,7 @@ function exportAllPyq(kind) {
 }
 /* ---------- "PYQ ChapterWise PDF" and "Shift Wise PDF" tabs ---------- */
 const PDFT = { cw: { bucket: 'Main', sel: null, page: 0, v: 0, years: [] }, sw: { bucket: 'Main', sel: null, page: 0, v: 0, year: 'all' } };
-const BUCKET_NAME = { Main: 'JEE Main', Adv: 'JEE Advanced' };
+const BUCKET_NAME = { Main: 'JEE Main', Adv: 'JEE Advanced', KCET: 'KCET', AIEEE: 'AIEEE' };
 const chOrder = cc => { const c = CHMAP.get(cc); return c.cl * 100 + c.o; };
 function pyqOf(bucket) { return BANK.qs.filter(q => q.s === 'P' && q.e === bucket); }
 const cwYearOk = q => !PDFT.cw.years.length || PDFT.cw.years.includes(String(q.y));
@@ -2936,13 +2954,14 @@ function qbJson(n) {
   }
   return QBJ[n];
 }
-const QB_EXAM = { 'JEE Main': 'Main', 'AIEEE': 'Main', 'KCET': 'Main', 'JEE Advanced': 'Adv', 'IIT': 'Adv' };
+const QB_EXAM = { 'JEE Main': 'Main', 'AIEEE': 'Main', 'KCET': 'KCET', 'JEE Advanced': 'Adv', 'IIT': 'Adv' };
 function qbCompact(r) {
-  const e = QB_EXAM[r.exam] || 'Main';
+  const e = QB_EXAM[r.exam] || (r.exam === 'KCET' || String(r.id || '').startsWith('KCET') ? 'KCET' : 'Main');
   const P = r.source === 'PYQ';
   let o = r.options || []; if (typeof o === 'string') { try { o = JSON.parse(o); } catch (x) { o = []; } }
   const qTxt = String(r.question || '').replace(/\s*\{\{figure\}\}\s*/g, ' ').trim();
-  const q = { i: String(r.id), s: P ? 'P' : 'N', e, y: P && r.year != null && r.year !== '' ? Number(r.year) : null, p: r.paper, t: r.type, cc: r.chapter_code, tc: String(r.topic_code || '').replace(/^JM-/, ''), tp: r.topic || '', d: r.difficulty, q: qTxt, o, a: r.answer == null ? '' : String(r.answer) };
+  const ex = r.exam || (String(r.id || '').startsWith('KCET') ? 'KCET' : (e === 'Adv' ? 'JEE Advanced' : 'JEE Main'));
+  const q = { i: String(r.id), s: P ? 'P' : 'N', e, ex, y: P && r.year != null && r.year !== '' ? Number(r.year) : null, p: r.paper, t: r.type, cc: r.chapter_code, tc: String(r.topic_code || '').replace(/^JM-/, ''), tp: r.topic || '', d: r.difficulty, q: qTxt, o, a: r.answer == null ? '' : String(r.answer) };
   if (!P) { q.pb = r.publisher || 'VMC'; q.sec = r.section || ''; if (r.pyq) q.pq = r.pyq_ref || ''; }
   if (r.oos) q.oo = 1;
   if (r.figure && r.figure.svg) q.f = r.figure;
@@ -2963,6 +2982,17 @@ window.__qbCwPptx = async function (ids, rawQs) {
   let qs = (ids || []).map(i => BYID.get(String(i))).filter(Boolean);
   if (!qs.length && Array.isArray(rawQs)) qs = rawQs.map(qbCompact).filter(Boolean);
   if (!qs.length) throw new Error('no questions found');
+  if (Array.isArray(rawQs) && rawQs.length) {
+    const rawMap = new Map();
+    rawQs.forEach(rq => { if (rq && rq.id) rawMap.set(String(rq.id), rq); });
+    qs.forEach(q => {
+      const rq = rawMap.get(String(q.i));
+      if (rq) {
+        if (rq.exam) q.ex = rq.exam;
+        if (rq.exam === 'KCET' || String(rq.id || '').startsWith('KCET')) { q.e = 'KCET'; q.ex = 'KCET'; }
+      }
+    });
+  }
   const ccs = [...new Set(qs.map(q => q.cc))].filter(cc => CHMAP.has(cc)).sort((a, b) => chOrder(a) - chOrder(b));
   const one = ccs.length === 1, c0 = one ? CHMAP.get(ccs[0]) : null;
   const cls = [...new Set(ccs.map(cc => CHMAP.get(cc).cl))].sort();
@@ -2972,12 +3002,13 @@ window.__qbCwPptx = async function (ids, rawQs) {
   const tm = new Map(); flat.forEach(q => { const k = q.cc + '|' + q._t; if (!tm.has(k)) tm.set(k, { name: q._t, n: 0, o: (CHMAP.has(q.cc) ? chOrder(q.cc) : 999) * 1000 + synIdx(q.cc, q.tp) }); tm.get(k).n++; });
   const topics = [...tm.values()].sort((a, b) => a.o - b.o).map(t => ({ name: t.name, n: t.n }));
   const years = {}; qs.filter(q => q.s === 'P' && q.y).forEach(q => { years[q.y] = (years[q.y] || 0) + 1; });
-  const nP = qs.filter(q => q.s === 'P').length, nN = qs.length - nP, ex = [...new Set(qs.filter(q => q.s === 'P').map(q => q.e))];
-  const kindLabel = nN && nP ? 'PYQs + practice' : nN ? 'Practice questions' : ex.length === 1 ? (BUCKET_NAME[ex[0]] || 'JEE Main') + ' PYQs' : 'JEE Main + Advanced PYQs';
+  const nP = qs.filter(q => q.s === 'P').length, nN = qs.length - nP, ex = [...new Set(qs.filter(q => q.s === 'P').map(q => q.ex || q.e))];
+  const isKcetOnly = ex.length === 1 && ex[0] === 'KCET';
+  const kindLabel = nN && nP ? 'PYQs + practice' : nN ? 'Practice questions' : ex.length === 1 ? (BUCKET_NAME[ex[0]] || ex[0] || 'JEE Main') + ' PYQs' : (ex.includes('KCET') ? 'KCET + JEE PYQs' : 'JEE Main + Advanced PYQs');
   const figs = {}; for (const q of flat) if (q.f && !figs[q.i]) { try { figs[q.i] = await figPng(q.f); } catch (e) { /* skip the picture */ } }
   const logo = window.QB_LOGO_B64 ? { dataUrl: 'data:image/png;base64,' + window.QB_LOGO_B64, w: window.QB_LOGO_W || 480, h: window.QB_LOGO_H || 165 } : null;
   const yl = Object.keys(years).map(Number).sort((a, b) => a - b);
-  const d = { logo, chapter: one && c0 ? c0.n : 'Selected Questions', cl: cls[0] || '11 & 12', cc: one ? ccs[0] : '', clLabel: cls.length ? 'CLASS ' + cls.join(' & ') : 'JEE MATHS', chLabel: one ? 'CHAPTER ' + ccs[0].split('M')[1] : ccs.length + ' CHAPTERS',
+  const d = { logo, chapter: one && c0 ? c0.n : 'Selected Questions', cl: cls[0] || '11 & 12', cc: one ? ccs[0] : '', clLabel: cls.length ? 'CLASS ' + cls.join(' & ') : (isKcetOnly ? 'KCET MATHS' : 'JEE MATHS'), chLabel: one ? 'CHAPTER ' + ccs[0].split('M')[1] : ccs.length + ' CHAPTERS',
     bucket: ex.length === 1 ? ex[0] : 'Main', bucketName: kindLabel, kindLabel, perQ: true, year: yl.length ? (yl.length === 1 ? String(yl[0]) : 'all') : '\u2014', count: flat.length, years, topics, qs: flat, figs, meta: await pyqMeta() };
   return window.OfficeDoc.buildCwPptx(null, null, d, { CHMAP, figs });
 };
