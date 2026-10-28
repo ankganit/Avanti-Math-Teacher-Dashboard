@@ -1,0 +1,6 @@
+{
+  "name": "Math Teacher Dashboard & Test Generator",
+  "description": "Comprehensive Math Teacher Dashboard with Question Bank, A4 Test Paper Generator, DPP Library, Must Solve, and Student Analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
