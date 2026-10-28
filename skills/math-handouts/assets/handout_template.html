@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>12M21 Differential Equation - Handout</title>
+<link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+<style>
+@font-face{font-family:'Fredoka';font-weight:400;src:url('node_modules/@fontsource/fredoka/files/fredoka-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Fredoka';font-weight:500;src:url('node_modules/@fontsource/fredoka/files/fredoka-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Fredoka';font-weight:600;src:url('node_modules/@fontsource/fredoka/files/fredoka-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Fredoka';font-weight:700;src:url('node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Baloo 2';font-weight:700;src:url('node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Baloo 2';font-weight:800;src:url('node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2') format('woff2');}
+@font-face{font-family:'Patrick Hand';font-weight:400;src:url('node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2') format('woff2');}
+
+@page{size:297mm 210mm;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:'Patrick Hand','Fredoka',sans-serif;color:#1b1b2f;font-size:14.5pt;line-height:1.28}
+
+:root{
+  --mint:#c9f7d6;  --mint-t:#16a06a;
+  --pink:#ffd3e8;  --pink-t:#e0197a;
+  --sky:#c6efff;   --sky-t:#0a86c2;
+  --sun:#fff3b0;   --sun-t:#d98200;
+  --lav:#e5d8ff;   --lav-t:#7a3fd1;
+  --peach:#ffdfc6; --peach-t:#e8590c;
+  --lime:#e2f6b2;  --lime-t:#5a9a00;
+}
+
+.page{width:297mm;height:210mm;padding:8mm;page-break-after:always;position:relative;overflow:hidden}
+.frame{width:100%;height:100%;border:0.5mm solid #1b1b2f;border-radius:2.5mm;display:flex;position:relative}
+.panel{flex:1 1 50%;width:50%;padding:7mm 8mm 9mm 8mm;overflow:hidden;position:relative}
+.panel.left{border-right:0.4mm solid #1b1b2f;margin:7mm 0}
+.panel.left{padding-top:0;padding-bottom:0;margin:0;border-right:none}
+.divider{position:absolute;left:50%;top:7mm;bottom:7mm;border-left:0.4mm solid #1b1b2f}
+.pno{position:absolute;right:4mm;bottom:1.6mm;font-family:'Fredoka';font-size:9pt;color:#444}
+.panel.left{padding:7mm 8mm 9mm 8mm}
+
+/* banner */
+.banner{border-radius:3mm;text-align:center;font-family:'Baloo 2','Fredoka',sans-serif;font-weight:800;font-size:23pt;line-height:1.05;padding:3.2mm 4mm 2.6mm;margin:0 0 4mm}
+.b-mint{background:var(--mint);color:var(--mint-t)}
+.b-pink{background:var(--pink);color:var(--pink-t)}
+.b-sky{background:var(--sky);color:var(--sky-t)}
+.b-sun{background:var(--sun);color:var(--sun-t)}
+.b-lav{background:var(--lav);color:var(--lav-t)}
+.b-peach{background:var(--peach);color:var(--peach-t)}
+.b-lime{background:var(--lime);color:var(--lime-t)}
+.banner.sm{font-size:20pt}
+
+/* subheads */
+.sh{font-family:'Fredoka',sans-serif;font-weight:600;font-size:14.5pt;margin:2.6mm 0 1.2mm;line-height:1.1}
+.t-mint{color:var(--mint-t)} .t-pink{color:var(--pink-t)} .t-sky{color:var(--sky-t)}
+.t-sun{color:var(--sun-t)} .t-lav{color:var(--lav-t)} .t-peach{color:var(--peach-t)} .t-lime{color:var(--lime-t)}
+
+p{margin:1mm 0}
+.box{border-radius:3mm;padding:2.2mm 3.6mm;margin:1.8mm 0;text-align:left}
+.box.c{text-align:center}
+.box.mint{background:var(--mint)} .box.pink{background:var(--pink)} .box.sky{background:var(--sky)}
+.box.sun{background:var(--sun)} .box.lav{background:var(--lav)} .box.peach{background:var(--peach)} .box.lime{background:var(--lime)}
+.box.tight{padding:1.2mm 3mm}
+.small{font-size:13pt}
+.tiny{font-size:10.5pt}
+.hl{font-family:'Fredoka';font-weight:600}
+.red{color:#d6204f}
+.blue{color:#0a6fd0}
+.green{color:#0f8a4f}
+
+.katex{font-size:1.04em}
+.katex-display{margin:0.35em 0}
+
+ul.dots{margin:1mm 0 1mm 0;padding-left:5mm}
+ul.dots li{margin:0.6mm 0}
+ul.dots li::marker{color:#e0197a}
+
+table.t{width:100%;border-collapse:separate;border-spacing:0 1.3mm;font-size:12pt}
+table.t .katex{font-size:1.08em}
+table.t.chart td{padding:2.6mm 2.2mm}
+table.t td,table.t th{padding:1.4mm 2.2mm;vertical-align:middle}
+table.t th{font-family:'Fredoka';font-weight:600;font-size:11.5pt;color:#fff;text-align:left}
+table.t th:first-child{border-radius:2.5mm 0 0 2.5mm}
+table.t th:last-child{border-radius:0 2.5mm 2.5mm 0}
+table.t td:first-child{border-radius:2.5mm 0 0 2.5mm}
+table.t td:last-child{border-radius:0 2.5mm 2.5mm 0}
+table.t.pinkt th{background:#e0197a} table.t.pinkt td{background:#ffe4f1}
+table.t.skyt th{background:#0a86c2} table.t.skyt td{background:#dff5ff}
+table.t.lavt th{background:#7a3fd1} table.t.lavt td{background:#efe6ff}
+table.t.mintt th{background:#16a06a} table.t.mintt td{background:#dcf9e6}
+table.t.sunt th{background:#d98200} table.t.sunt td{background:#fff7c9}
+.ctr{text-align:center}
+
+/* cover */
+.coverwrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.coverbox{border:0.7mm solid #1b1b2f;border-radius:3mm;width:92%;padding:12mm 6mm;text-align:center;background:linear-gradient(135deg,#fffbe0 0%,#ffe9f4 50%,#e4f6ff 100%)}
+.coverbox .code{font-family:'Baloo 2';font-weight:800;font-size:60pt;line-height:1;color:var(--pink-t)}
+.coverbox .nm{font-family:'Baloo 2';font-weight:800;font-size:46pt;line-height:1;color:#1b1b2f;margin-top:2mm}
+.coverbox .nm span{color:var(--sky-t)}
+.covertag{margin-top:7mm;font-family:'Fredoka';font-weight:500;font-size:14pt;color:#fff;background:var(--lav-t);padding:2mm 7mm;border-radius:10mm}
+.deco{position:absolute;font-family:'Baloo 2';font-weight:800;opacity:.9}
+
+/* contents */
+.crow{display:flex;align-items:center;gap:3mm;margin:2.4mm 0;border-radius:3mm;padding:2mm 3mm}
+.cchip{min-width:9mm;height:9mm;border-radius:50%;color:#fff;font-family:'Fredoka';font-weight:700;font-size:14pt;display:flex;align-items:center;justify-content:center}
+.ctxt{flex:1;line-height:1.15;font-size:15pt}
+.ctxt .cc{font-family:'Fredoka';font-size:9.5pt;opacity:.75}
+.cpg{font-family:'Fredoka';font-weight:600;font-size:11pt;white-space:nowrap}
+
+.step{display:flex;gap:2.5mm;align-items:flex-start;margin:1.2mm 0}
+.step .n{min-width:6.5mm;height:6.5mm;border-radius:50%;background:#e0197a;color:#fff;font-family:'Fredoka';font-weight:600;font-size:11pt;display:flex;align-items:center;justify-content:center;margin-top:0.4mm}
+.step.sky .n{background:#0a86c2}.step.lav .n{background:#7a3fd1}.step.mint .n{background:#16a06a}.step.peach .n{background:#e8590c}
+.warn{border:0.5mm dashed #d6204f;border-radius:3mm;padding:1.6mm 3.2mm;margin:1.8mm 0;background:#fff5f7}
+.warn b{color:#d6204f;font-family:'Fredoka'}
+.tip{border:0.5mm dashed #16a06a;border-radius:3mm;padding:1.6mm 3.2mm;margin:1.8mm 0;background:#f2fff7}
+.tip b{color:#16a06a;font-family:'Fredoka'}
+.panel.left .pno{display:none}
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 : COVER + CONTENTS ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="coverwrap">
+    <div class="deco" style="left:2mm;top:6mm;font-size:34pt;color:#ffc2de;transform:rotate(-8deg)">dy/dx</div>
+    <div class="deco" style="right:2mm;bottom:12mm;font-size:34pt;color:#bfe9ff;transform:rotate(6deg)">∫ dx</div>
+    <div class="deco" style="right:6mm;top:10mm;font-size:30pt;color:#ffe58a;transform:rotate(8deg)">y′ + Py = Q</div>
+    <div class="coverbox">
+      <div class="code">12M21</div>
+      <div class="nm">Differential<br><span>Equation</span></div>
+    </div>
+    <div class="covertag">Quick Revision Handout</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="banner b-lav">Contents</div>
+  <div class="crow" style="background:var(--pink)"><div class="cchip" style="background:#e0197a">1</div><div class="ctxt">Introduction to Differential Equations<div class="cc">JM-12M21.1</div></div><div class="cpg t-pink">p. 2–3</div></div>
+  <div class="crow" style="background:var(--sky)"><div class="cchip" style="background:#0a86c2">2</div><div class="ctxt">Solution of Differential Equations Using Variable Separation Method<div class="cc">JM-12M21.2</div></div><div class="cpg t-sky">p. 4</div></div>
+  <div class="crow" style="background:var(--mint)"><div class="cchip" style="background:#16a06a">3</div><div class="ctxt">Solution of Homogeneous Differential Equations<div class="cc">JM-12M21.3</div></div><div class="cpg t-mint">p. 4–5</div></div>
+  <div class="crow" style="background:var(--sun)"><div class="cchip" style="background:#d98200">4</div><div class="ctxt">Solution of Linear Differential Equations<div class="cc">JM-12M21.4</div></div><div class="cpg t-sun">p. 5–6</div></div>
+  <div class="crow" style="background:var(--lav)"><div class="cchip" style="background:#7a3fd1">5</div><div class="ctxt">General Form of Variable Separation<div class="cc">JM-12M21.5</div></div><div class="cpg t-lav">p. 6</div></div>
+  <div class="crow" style="background:var(--peach)"><div class="cchip" style="background:#e8590c">6</div><div class="ctxt">Applications of Differential Equations<div class="cc">JM-12M21.6</div></div><div class="cpg t-peach">p. 7</div></div>
+  <div class="crow" style="background:var(--lime)"><div class="cchip" style="background:#5a9a00">★</div><div class="ctxt">Method Chooser Chart + Tips &amp; Common Mistakes</div><div class="cpg t-lime">p. 8</div></div>
+  <div class="pno">1</div>
+</div>
+</div></div>
+
+<!-- ================= PAGE 2 : BASICS + ORDER/DEGREE ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-mint">Differential Equation: Basics</div>
+
+  <div class="sh t-pink">Definition</div>
+  <p>An equation that contains the independent variable, the dependent variable and <span class="hl">derivatives</span> of the dependent variable.</p>
+  <div class="box pink c">$$\frac{dy}{dx}+y=\sin x$$</div>
+
+  <div class="sh t-sky">Types</div>
+  <ul class="dots">
+    <li><span class="hl">Ordinary (ODE):</span> only one independent variable.</li>
+    <li><span class="hl">Partial (PDE):</span> more than one independent variable.</li>
+  </ul>
+  <p class="small">JEE deals with ODEs only.</p>
+
+  <div class="sh t-peach">Order</div>
+  <div class="box peach">Order of the <span class="hl">highest-order derivative</span> present in the equation.</div>
+
+  <div class="sh t-lav">Degree</div>
+  <div class="box lav">Power of the highest-order derivative <span class="hl">after</span> the equation is made a polynomial in its derivatives (no radicals or fractions of derivatives).</div>
+
+  <div class="warn"><b>Degree not defined</b> when the derivatives sit inside functions that cannot be removed, e.g. $\sin y'$, $\cos y''$.</div>
+  <div class="pno">2</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-sky">Order &amp; Degree: Examples</div>
+  <table class="t skyt">
+    <tr><th>Equation</th><th>Order</th><th>Degree</th></tr>
+    <tr><td>$\dfrac{dy}{dx}+y=x$</td><td class="ctr">1</td><td class="ctr">1</td></tr>
+    <tr><td>$\left(\dfrac{d^2y}{dx^2}\right)^{3}+\left(\dfrac{dy}{dx}\right)^{4}=x$</td><td class="ctr">2</td><td class="ctr">3</td></tr>
+    <tr><td>$y=x\dfrac{dy}{dx}+\sqrt{1+\left(\dfrac{dy}{dx}\right)^{2}}$</td><td class="ctr">1</td><td class="ctr">2</td></tr>
+    <tr><td>$k\dfrac{d^2y}{dx^2}=\left[1+\left(\dfrac{dy}{dx}\right)^{2}\right]^{3/2}$</td><td class="ctr">2</td><td class="ctr">2</td></tr>
+    <tr><td>$\left(\dfrac{d^3y}{dx^3}\right)^{2/3}=\dfrac{d^2y}{dx^2}$</td><td class="ctr">3</td><td class="ctr">2</td></tr>
+    <tr><td>$\dfrac{d^2y}{dx^2}+\sin\!\left(\dfrac{dy}{dx}\right)=0$</td><td class="ctr">2</td><td class="ctr red">not defined</td></tr>
+  </table>
+
+  <div class="sh t-pink">Steps</div>
+  <div class="step"><div class="n">1</div><div>Remove radicals and fractional powers of derivatives (isolate and raise to a power).</div></div>
+  <div class="step sky"><div class="n">2</div><div>Highest derivative gives the <span class="hl blue">order</span>.</div></div>
+  <div class="step lav"><div class="n">3</div><div>Its power gives the <span class="hl" style="color:#7a3fd1">degree</span>.</div></div>
+  <div class="tip"><b>Remember:</b> order and degree are always positive integers.</div>
+  <div class="pno">2</div>
+</div>
+</div></div>
+<!-- the pno on the left panel of page 2 is intentionally removed below via CSS if duplicate -->
+
+<!-- ================= PAGE 3 : FORMATION + SOLUTIONS ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-pink">Formation of a Differential Equation</div>
+  <div class="box sun c"><span class="hl">n</span> independent arbitrary constants &nbsp;⟹&nbsp; DE of order <span class="hl">n</span></div>
+
+  <div class="sh t-sky">Method</div>
+  <div class="step sky"><div class="n">1</div><div>Differentiate the family <span class="hl">n</span> times.</div></div>
+  <div class="step sky"><div class="n">2</div><div>Eliminate the <span class="hl">n</span> constants from the <span class="hl">n+1</span> equations.</div></div>
+
+  <table class="t pinkt">
+    <tr><th>Family</th><th>Differential equation</th></tr>
+    <tr><td>$y=mx$</td><td>$y=x\dfrac{dy}{dx}$</td></tr>
+    <tr><td>$x^2+y^2=a^2$</td><td>$x+y\dfrac{dy}{dx}=0$</td></tr>
+    <tr><td>$y^2=4ax$</td><td>$y=2x\dfrac{dy}{dx}$</td></tr>
+    <tr><td>$y=Ae^{2x}+Be^{-3x}$</td><td>$y''+y'-6y=0$</td></tr>
+  </table>
+
+  <div class="warn"><b>Watch out:</b> constants must be <span class="hl">independent</span>. In <span style="white-space:nowrap">$y=ae^{x+b}$</span> we have <span style="white-space:nowrap">$y=ce^{x}$</span> (with $c=ae^{b}$), so there is only <span class="hl">one</span> constant and the order is 1.</div>
+  <div class="pno">3</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-lime">Solution of a Differential Equation</div>
+
+  <div class="sh t-pink">General solution</div>
+  <div class="box pink">Contains <span class="hl">n independent arbitrary constants</span> (n = order). It represents a <span class="hl">family of curves</span>.</div>
+
+  <div class="sh t-sky">Particular solution</div>
+  <div class="box sky">Constants given definite values using conditions. It represents <span class="hl">one curve</span> from the family.</div>
+
+  <div class="sh t-lav">Singular solution</div>
+  <div class="box lav">A solution that <span class="hl">cannot</span> be obtained from the general solution by any choice of constants.</div>
+
+  <div class="box sun">
+    <span class="hl">Example:</span> $\dfrac{dy}{dx}=2\sqrt{y}$ &nbsp;⟹&nbsp; general: $y=(x+C)^2$.<br>
+    $y=0$ also satisfies it, but no $C$ gives it: <span class="red hl">singular</span>.
+  </div>
+
+  <div class="sh t-mint">Initial value problem</div>
+  <p>$\dfrac{dy}{dx}=3x^2,\ y(1)=2$ &nbsp;⟹&nbsp; $y=x^3+C$, and $2=1+C$ gives $C=1$, so $y=x^3+1$.</p>
+  <div class="tip"><b>Tip:</b> use the given condition at the <span class="hl">end</span>, after integrating, to find $C$.</div>
+  <div class="pno">3</div>
+</div>
+</div></div>
+
+<!-- ================= PAGE 4 : VARIABLE SEPARATION + HOMOGENEOUS ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-sky">Variable Separation Method</div>
+  <p>When the equation can be written as</p>
+  <div class="box sky c">$$\frac{dy}{dx}=f(x)\,g(y)$$</div>
+  <p class="ctr hl">separate the variables, then integrate:</p>
+  <div class="box pink c">$$\int\frac{dy}{g(y)}=\int f(x)\,dx+C$$</div>
+
+  <div class="sh t-lav">Examples</div>
+  <div class="box lav small">
+    <span class="hl">1.</span> $\dfrac{dy}{dx}=e^{x-y}$ &nbsp;⟹&nbsp; $e^{y}dy=e^{x}dx$ &nbsp;⟹&nbsp; $\boldsymbol{e^{y}=e^{x}+C}$
+  </div>
+  <div class="box lav small">
+    <span class="hl">2.</span> $\dfrac{dy}{dx}=\dfrac{1+y^2}{1+x^2}$ &nbsp;⟹&nbsp; $\boldsymbol{\tan^{-1}y-\tan^{-1}x=C}$
+  </div>
+  <div class="box lav small">
+    <span class="hl">3.</span> $\dfrac{dy}{dx}=xy,\ y(0)=1$ &nbsp;⟹&nbsp; $\ln y=\dfrac{x^2}{2}+C$, and $C=0$, so $\boldsymbol{y=e^{x^2/2}}$
+  </div>
+
+  <div class="tip"><b>Tips:</b>
+    <ul class="dots" style="margin:0.5mm 0 0 0">
+      <li>Dividing by $g(y)$ can lose constant solutions where $g(y)=0$. Check them.</li>
+      <li>Write the constant as $\ln C$ when logs appear.</li>
+    </ul>
+  </div>
+  <div class="pno">4</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-mint">Homogeneous Differential Equation</div>
+  <div class="box mint c">$$\frac{dy}{dx}=\frac{f(x,y)}{g(x,y)}=F\!\left(\frac{y}{x}\right)$$</div>
+  <p class="small">$f,g$ homogeneous of the same degree: $f(\lambda x,\lambda y)=\lambda^{n}f(x,y)$.</p>
+
+  <div class="sh t-pink">Method</div>
+  <div class="step"><div class="n">1</div><div>Put $y=vx$, so $\dfrac{dy}{dx}=v+x\dfrac{dv}{dx}$.</div></div>
+  <div class="step"><div class="n">2</div><div>Separate the variables:</div></div>
+  <div class="box pink c tight">$$\frac{dv}{F(v)-v}=\frac{dx}{x}$$</div>
+  <div class="step"><div class="n">3</div><div>Integrate, then put back $v=\dfrac{y}{x}$.</div></div>
+  <p class="small">If the form is $\dfrac{dx}{dy}=F\!\left(\dfrac{x}{y}\right)$, put <span class="hl">$x=vy$</span> instead.</p>
+
+  <div class="box sun small">
+    <span class="hl">Ex.</span> $\dfrac{dy}{dx}=\dfrac{x^2+y^2}{2xy}$. With $y=vx$: $x\dfrac{dv}{dx}=\dfrac{1-v^2}{2v}$, so $\dfrac{2v\,dv}{1-v^2}=\dfrac{dx}{x}$,<br>
+    giving $\boldsymbol{x^2-y^2=Cx}$
+  </div>
+  <div class="pno">4</div>
+</div>
+</div></div>
+
+<!-- ================= PAGE 5 : REDUCIBLE HOMOGENEOUS + LINEAR ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-peach sm">Reducible to Homogeneous</div>
+  <div class="box peach c">$$\frac{dy}{dx}=\frac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2}$$</div>
+
+  <div class="sh t-pink">Case 1: &nbsp;$\dfrac{a_1}{a_2}\neq\dfrac{b_1}{b_2}$</div>
+  <div class="box pink">
+    Lines intersect at $(h,k)$. Put $x=X+h,\ y=Y+k$. The equation becomes <span class="hl">homogeneous in $X,Y$</span>.
+  </div>
+  <p class="small"><span class="hl">Ex.</span> $\dfrac{x-y+1}{x+y-3}$: the lines meet at $(1,2)$, so use $x=X+1,\ y=Y+2$ to get $\dfrac{dY}{dX}=\dfrac{X-Y}{X+Y}$.</p>
+
+  <div class="sh t-sky">Case 2: &nbsp;$\dfrac{a_1}{a_2}=\dfrac{b_1}{b_2}$</div>
+  <div class="box sky">
+    Lines are parallel. Put $z=a_1x+b_1y$. The equation becomes <span class="hl">variable separable</span> in $x,z$.
+  </div>
+
+  <div class="box sun small">
+    <span class="hl">Ex.</span> $\dfrac{dy}{dx}=\dfrac{x+y+1}{x+y-1}$. Put $z=x+y$: $\dfrac{dz}{dx}=\dfrac{2z}{z-1}$,<br>
+    so $\dfrac{z-1}{2z}dz=dx$, giving $\boldsymbol{y-x-\ln|x+y|=C}$
+  </div>
+  <div class="pno">5</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-sun">Linear Differential Equation</div>
+  <div class="box sun c">$$\frac{dy}{dx}+P\,y=Q\qquad(P,Q\text{ are functions of }x)$$</div>
+  <div class="box pink c">
+    $$\text{I.F.}=e^{\int P\,dx}$$
+    $$y\cdot(\text{I.F.})=\int Q\cdot(\text{I.F.})\,dx+C$$
+  </div>
+
+  <div class="sh t-sky">Linear in $x$</div>
+  <div class="box sky c">$$\frac{dx}{dy}+P\,x=Q\quad(P,Q\text{ functions of }y)$$
+    $$\text{I.F.}=e^{\int P\,dy},\qquad x\cdot(\text{I.F.})=\int Q\cdot(\text{I.F.})\,dy+C$$
+  </div>
+
+  <div class="box lav small">
+    <span class="hl">Ex.1</span> $\dfrac{dy}{dx}+\dfrac{y}{x}=x^2$. I.F. $=x$, so $xy=\dfrac{x^4}{4}+C$, i.e. $\boldsymbol{y=\dfrac{x^3}{4}+\dfrac{C}{x}}$
+  </div>
+  <div class="box lav small">
+    <span class="hl">Ex.2</span> $(x+y)\dfrac{dy}{dx}=1$ gives $\dfrac{dx}{dy}-x=y$. I.F. $=e^{-y}$, so $\boldsymbol{x=Ce^{y}-y-1}$
+  </div>
+  <div class="tip"><b>Tip:</b> do <span class="hl">not</span> add a constant while finding the I.F.</div>
+  <div class="pno">5</div>
+</div>
+</div></div>
+
+<!-- ================= PAGE 6 : BERNOULLI/IF + GENERAL FORM ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-lav sm">Reducible to Linear + I.F. Table</div>
+  <div class="sh t-pink" style="margin-top:0">Bernoulli's equation</div>
+  <div class="box pink c">$$\frac{dy}{dx}+Py=Q\,y^{n}\qquad(n\neq0,1)$$</div>
+  <p class="small">Divide by $y^{n}$ and put <span class="hl">$z=y^{1-n}$</span>. It becomes linear:</p>
+  <div class="box sun c tight">$$\frac{dz}{dx}+(1-n)P\,z=(1-n)Q$$</div>
+  <p class="small"><span class="hl">Ex.</span> $\dfrac{dy}{dx}+\dfrac{y}{x}=y^2$. Put $z=\dfrac1y$: $\dfrac{dz}{dx}-\dfrac{z}{x}=-1$, giving $\boldsymbol{\dfrac{1}{xy}=C-\ln|x|}$</p>
+  <p class="small">Also: if $f'(y)\dfrac{dy}{dx}+P f(y)=Q$, put $f(y)=z$.</p>
+
+  <div class="sh t-sky">Quick Integrating Factors</div>
+  <table class="t skyt" style="font-size:13pt;border-spacing:0 0.8mm">
+    <tr><th>$P(x)$</th><th>I.F.</th><th>$P(x)$</th><th>I.F.</th></tr>
+    <tr><td>$a$</td><td>$e^{ax}$</td><td>$\tan x$</td><td>$\sec x$</td></tr>
+    <tr><td>$\dfrac1x$</td><td>$x$</td><td>$\cot x$</td><td>$\sin x$</td></tr>
+    <tr><td>$-\dfrac1x$</td><td>$\dfrac1x$</td><td>$\dfrac{1}{1+x^2}$</td><td>$e^{\tan^{-1}x}$</td></tr>
+    <tr><td>$\dfrac kx$</td><td>$x^{k}$</td><td>$\dfrac{f'(x)}{f(x)}$</td><td>$f(x)$</td></tr>
+  </table>
+  <div class="pno">6</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-pink sm">General Form of Variable Separation</div>
+
+  <div class="sh t-sky" style="margin-top:0">A. Substitution</div>
+  <div class="box sky small" style="padding:1.4mm 3mm">
+    $\dfrac{dy}{dx}=f(ax+by+c)$: put $z=ax+by+c$, then $z'=a+b\,f(z)$.<br>
+    $y\,f(xy)\,dx+x\,g(xy)\,dy=0$: put $xy=v$.
+  </div>
+
+  <div class="sh t-lav" style="margin:1.5mm 0 0.6mm">B. Exact differentials to spot</div>
+  <table class="t lavt" style="font-size:12pt;border-spacing:0 0.4mm">
+    <tr><td>$x\,dy+y\,dx$</td><td>$=d(xy)$</td></tr>
+    <tr><td>$\dfrac{x\,dy-y\,dx}{x^2}$</td><td>$=d\!\left(\dfrac yx\right)$</td></tr>
+    <tr><td>$\dfrac{y\,dx-x\,dy}{y^2}$</td><td>$=d\!\left(\dfrac xy\right)$</td></tr>
+    <tr><td>$\dfrac{x\,dy-y\,dx}{xy}$</td><td>$=d\!\left(\ln\dfrac yx\right)$</td></tr>
+    <tr><td>$\dfrac{x\,dy-y\,dx}{x^2+y^2}$</td><td>$=d\!\left(\tan^{-1}\dfrac yx\right)$</td></tr>
+    <tr><td>$x\,dx+y\,dy$</td><td>$=\tfrac12\,d(x^2+y^2)$</td></tr>
+  </table>
+
+  <div class="box sun" style="font-size:12pt;padding:1.4mm 3mm;margin:1mm 0">
+    <span class="hl">Ex.1</span> $\dfrac{dy}{dx}=(x+y)^2$: put $z=x+y$, so $\dfrac{dz}{dx}=1+z^2$ and $\boldsymbol{x+y=\tan(x+C)}$
+  </div>
+  <div class="box sun" style="font-size:12pt;padding:1.4mm 3mm;margin:1mm 0">
+    <span class="hl">Ex.2</span> $x\,dy-y\,dx=(x^2+y^2)dx$ gives $d\!\left(\tan^{-1}\dfrac yx\right)=dx$, so $\boldsymbol{\tan^{-1}\dfrac yx=x+C}$
+  </div>
+  <div class="pno">6</div>
+</div>
+</div></div>
+
+<!-- ================= PAGE 7 : APPLICATIONS ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-mint sm">Applications: Geometry</div>
+  <p class="small">Let $y'=\dfrac{dy}{dx}$ at the point $P(x,y)$.</p>
+  <div class="box mint small" style="padding:1.6mm 3mm">
+    Slope of tangent $=y'$ &nbsp;|&nbsp; Slope of normal $=-\dfrac{1}{y'}$<br>
+    Tangent: $Y-y=y'(X-x)$
+  </div>
+  <table class="t mintt" style="font-size:12pt;border-spacing:0 0.8mm">
+    <tr><td>Length of tangent</td><td>$\left|\dfrac{y\sqrt{1+y'^2}}{y'}\right|$</td></tr>
+    <tr><td>Length of normal</td><td>$\left|y\sqrt{1+y'^2}\right|$</td></tr>
+    <tr><td>Subtangent</td><td>$\left|\dfrac{y}{y'}\right|$</td></tr>
+    <tr><td>Subnormal</td><td>$\left|y\,y'\right|$</td></tr>
+  </table>
+
+  <div class="sh t-pink">Orthogonal trajectories</div>
+  <div class="step"><div class="n">1</div><div>Form the DE of the given family (eliminate $c$).</div></div>
+  <div class="step"><div class="n">2</div><div>Replace $\dfrac{dy}{dx}$ by $-\dfrac{dx}{dy}$.</div></div>
+  <div class="step"><div class="n">3</div><div>Solve the new DE.</div></div>
+  <p class="small"><span class="hl">Ex.</span> $y=cx$ gives $y'=\dfrac yx$. Replacing: $-\dfrac{dx}{dy}=\dfrac yx$, so $x\,dx+y\,dy=0$, giving $\boldsymbol{x^2+y^2=C}$</p>
+  <div class="pno">7</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-peach sm">Applications: Rate Problems</div>
+
+  <div class="sh t-pink" style="margin-top:0">Growth &amp; decay</div>
+  <div class="box pink c tight">$$\frac{dN}{dt}=kN\ \Rightarrow\ N=N_0e^{kt}$$</div>
+  <p class="small">$k>0$ growth, $k<0$ decay. Half-life $T_{1/2}=\dfrac{\ln 2}{|k|}$.</p>
+
+  <div class="sh t-sky">Newton's law of cooling</div>
+  <div class="box sky c tight">$$\frac{dT}{dt}=-k\,(T-T_s)\ \Rightarrow\ T=T_s+(T_0-T_s)e^{-kt}$$</div>
+  <p class="small">$T_s$ = surroundings, $T_0$ = initial temperature.</p>
+
+  <div class="sh t-lav">Mixing (tank) problems</div>
+  <div class="box lav small">$\dfrac{dQ}{dt}=$ (rate in) $-$ (rate out), where rate out $=\dfrac{Q}{V}\times$ outflow rate.</div>
+
+  <div class="box sun small">
+    <span class="hl">Ex.1</span> Bacteria double in 3 h. Then $2=e^{3k}$, so 8-fold needs $e^{9k}$: <span class="hl">9 h</span>.
+  </div>
+  <div class="box sun small">
+    <span class="hl">Ex.2</span> A body at $100^\circ$ in a $20^\circ$ room cools to $60^\circ$ in 10 min. Then $40=80e^{-10k}$, so $e^{-10k}=\tfrac12$. At 20 min: $T=20+80\cdot\tfrac14=\boldsymbol{40^\circ}$
+  </div>
+  <div class="tip"><b>Steps:</b> write the statement as a DE in $t$, solve, then use both conditions to find the constant and $k$.</div>
+  <div class="pno">7</div>
+</div>
+</div></div>
+
+<!-- ================= PAGE 8 : CHART + TIPS ================= -->
+<div class="page"><div class="frame">
+<div class="divider"></div>
+
+<div class="panel left">
+  <div class="banner b-lime sm">Method Chooser Chart</div>
+  <table class="t mintt chart" style="font-size:13.5pt;border-spacing:0 1.6mm">
+    <tr><th>Type</th><th>Identify</th><th>Do this</th></tr>
+    <tr><td class="hl">Separable</td><td>$f(x)g(y)$</td><td>separate and integrate</td></tr>
+    <tr><td class="hl">$f(ax+by+c)$</td><td>$y'=f(ax+by+c)$</td><td>$z=ax+by+c$</td></tr>
+    <tr><td class="hl">Homogeneous</td><td>$y'=F(y/x)$</td><td>$y=vx$</td></tr>
+    <tr><td class="hl">Lines form</td><td>$\dfrac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2}$</td><td>shift origin, or $z=a_1x+b_1y$</td></tr>
+    <tr><td class="hl">Linear in $y$</td><td>$y'+Py=Q$</td><td>I.F. $=e^{\int P\,dx}$</td></tr>
+    <tr><td class="hl">Linear in $x$</td><td>$x'+Px=Q(y)$</td><td>I.F. $=e^{\int P\,dy}$</td></tr>
+    <tr><td class="hl">Bernoulli</td><td>$y'+Py=Qy^n$</td><td>$z=y^{1-n}$</td></tr>
+    <tr><td class="hl">Differential forms</td><td>$x\,dy\pm y\,dx$ patterns</td><td>use $d(\cdot)$ results</td></tr>
+  </table>
+  <div class="pno">8</div>
+</div>
+
+<div class="panel">
+  <div class="banner b-pink sm">Tips &amp; Common Mistakes</div>
+  <div class="warn">
+    <b>Avoid these</b>
+    <ul class="dots small" style="margin:0.6mm 0 0 0">
+      <li>Forgetting $+C$ after integrating.</li>
+      <li>Dropping the modulus in $\ln|x|$.</li>
+      <li>Losing constant solutions while dividing.</li>
+      <li>Adding a constant inside the I.F.</li>
+      <li>Wrong sign of $P$ after writing the standard form.</li>
+      <li>Not clearing radicals before finding degree.</li>
+    </ul>
+  </div>
+
+  <div class="sh t-sky">Standard integrals used here</div>
+  <div class="box sky small" style="padding:2mm 3mm;line-height:1.9">
+    <div style="margin:2.6mm 0">$\displaystyle\int\frac{dx}{x^2+a^2}=\frac1a\tan^{-1}\frac xa$</div>
+    <div style="margin:2.6mm 0">$\displaystyle\int\frac{dx}{x^2-a^2}=\frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right|$</div>
+    <div style="margin:2.6mm 0">$\displaystyle\int\frac{dx}{\sqrt{a^2-x^2}}=\sin^{-1}\frac xa$</div>
+    <div style="margin:2.6mm 0">$e^{\ln f(x)}=f(x)$</div>
+  </div>
+
+  <div class="tip">
+    <b>Before submitting</b>
+    <ul class="dots small" style="margin:0.6mm 0 0 0">
+      <li>Match the type first, then pick the method.</li>
+      <li>Apply initial conditions only at the end.</li>
+      <li>Differentiate your answer to verify it.</li>
+    </ul>
+  </div>
+  <div class="pno">8</div>
+</div>
+</div></div>
+
+<script src="node_modules/katex/dist/katex.min.js"></script>
+<script src="node_modules/katex/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  renderMathInElement(document.body, {
+    delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],
+    throwOnError:false
+  });
+  document.body.setAttribute('data-ready','1');
+});
+</script>
+</body>
+</html>

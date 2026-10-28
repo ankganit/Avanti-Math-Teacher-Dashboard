@@ -193,9 +193,10 @@
     if (!q) return '';
     var rawExam = q.exam || '';
     var exam = rawExam.trim().toUpperCase();
-    if (!exam) {
-      if (q.id && q.id.startsWith('KCET')) exam = 'KCET';
-      else if (q.id && q.id.startsWith('JA')) exam = 'JEE ADVANCED';
+    if (exam === 'KCET' || (q.id && String(q.id).startsWith('KCET'))) {
+      exam = 'KCET';
+    } else if (!exam) {
+      if (q.id && q.id.startsWith('JA')) exam = 'JEE ADVANCED';
       else if (q.id && q.id.startsWith('AIEEE')) exam = 'AIEEE';
       else exam = 'JEE MAIN';
     }
@@ -1286,7 +1287,7 @@
 
   function exportName(qs) {
     var chs = uniq(qs.map(function (q) { return q.chapter_code; }));
-    var exams = uniq(qs.map(function (q) { return q.exam; }));
+    var exams = uniq(qs.map(function (q) { return (q.exam === 'KCET' || (q.id && String(q.id).startsWith('KCET'))) ? 'KCET' : q.exam; }));
     var years = uniq(qs.filter(function (q) { return q.year; }).map(function (q) { return String(q.year); })).sort();
     var parts = [];
     if (chs.length === 1) { var c = CHMAP[chs[0]]; parts.push('c' + chs[0] + ' ' + (c ? c.chapter : qs[0].chapter)); }

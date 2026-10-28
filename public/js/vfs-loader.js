@@ -43,6 +43,53 @@
       VFS_CACHE['bank-meta.json'] = bundle['bank-meta'];
       VFS_CACHE['must.json'] = bundle.must;
       VFS_CACHE['syllabus.json'] = bundle.syllabus;
+      try {
+        const pyqs = VFS_CACHE['qb/data/pyq.json'] || [];
+        const syl = bundle.syllabus;
+        const normStr = t => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        if (syl && Array.isArray(syl.chapters) && pyqs.length) {
+          syl.chapters.forEach(c => {
+            const chQs = pyqs.filter(q => q.chapter_code === c.code);
+            const mainQs = chQs.filter(q => q.exam === 'JEE Main' || q.exam === 'AIEEE' || q.exam === 'KCET');
+            const advQs = chQs.filter(q => q.exam === 'JEE Advanced' || q.exam === 'IIT');
+            c.m = mainQs.length;
+            c.a = advQs.length;
+            c.yr = c.yr || {};
+            for (let y = 2020; y <= 2026; y++) {
+              c.yr[y] = chQs.filter(q => (q.exam === 'JEE Main' || q.exam === 'AIEEE') && q.year === y).length;
+            }
+            if (Array.isArray(c.subs)) {
+              c.subs.forEach(s => {
+                const tcClean = String(s.code || '').replace(/^JM-/, '');
+                const sNorm = normStr(s.name);
+                const matched = chQs.filter(q => {
+                  const qtc = String(q.topic_code || '').replace(/^JM-/, '');
+                  const qtp = normStr(q.topic);
+                  return (qtc && qtc === tcClean) || (qtp && qtp === sNorm);
+                });
+                s.m = matched.filter(q => q.exam === 'JEE Main' || q.exam === 'AIEEE' || q.exam === 'KCET').length;
+                s.a = matched.filter(q => q.exam === 'JEE Advanced' || q.exam === 'IIT').length;
+                s.mt = s.m >= 15 ? 'High' : s.m >= 5 ? 'Medium' : s.m > 0 ? 'Low' : 'None';
+                s.at = s.a >= 10 ? 'High' : s.a >= 3 ? 'Medium' : s.a > 0 ? 'Low' : 'None';
+              });
+            }
+          });
+          syl.cnt = {};
+          ['m', 'a'].forEach(t => {
+            ['High', 'Medium', 'Low', 'None'].forEach(tier => {
+              let count = 0;
+              syl.chapters.forEach(c => {
+                (c.subs || []).forEach(s => {
+                  if ((t === 'm' ? s.mt : s.at) === tier) count++;
+                });
+              });
+              syl.cnt[t + '|' + tier] = count;
+            });
+          });
+        }
+      } catch (err) {
+        console.warn('Could not sync syllabus counts:', err);
+      }
       VFS_CACHE['handouts/index.json'] = bundle.handouts;
       VFS_CACHE['qb/qb.html'] = bundle.qb_html;
       VFS_CACHE['qb/qb-all.js'] = bundle.qb_js;

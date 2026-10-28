@@ -872,7 +872,7 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
     s.addText(clLabel, { x: 0.6, y: 0.6, w: pillW, h: 0.42, fontFace: FB, bold: true, fontSize: 13, color: CORAL, align: 'center', valign: 'middle', charSpacing: 3, margin: 0 });
     s.addText(chLabel, { x: 0.6, y: 1.55, w: 7.6, h: 0.4, fontFace: FB, bold: true, fontSize: 16, color: TEAL, charSpacing: 3, margin: 0 });
     const titleFs = String(d.chapter || '').length > 34 ? 36 : 44;
-    s.addText(d.chapter || 'JEE Mathematics', { x: 0.6, y: 2.0, w: 7.6, h: 1.9, fontFace: FH, bold: true, fontSize: titleFs, color: WHITE, valign: 'top', lineSpacingMultiple: 0.95, margin: 0 });
+    s.addText(d.chapter || (d.bucket === 'KCET' ? 'KCET Mathematics' : 'JEE Mathematics'), { x: 0.6, y: 2.0, w: 7.6, h: 1.9, fontFace: FH, bold: true, fontSize: titleFs, color: WHITE, valign: 'top', lineSpacingMultiple: 0.95, margin: 0 });
     s.addShape('rect', { x: 0.6, y: 4.05, w: 0.9, h: 0.07, fill: { color: CORAL }, line: { type: 'none' } });
     if (big) s.addText(big, { x: 0.6, y: 4.35, w: 7.6, h: 1.2, fontFace: FH, bold: true, fontSize: bigSize || 54, color: bigColor || CORAL, valign: 'top', margin: 0 });
   }
@@ -893,6 +893,7 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
   }
 
   /* 2. Contents / Topic Cards Grid (Paginated up to 10 topics per slide with non-overlapping header) */
+  if (!d.noContents && !d.perQ) {
   const allTopics = (d.topics || []).length ? d.topics : [{ name: d.chapter || 'Selected Questions', n: d.count }];
   const PER_SLIDE = 10;
   const totalTopicSlides = Math.max(1, Math.ceil(allTopics.length / PER_SLIDE));
@@ -927,15 +928,17 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
       s.addText(String(t.n || 0), { x: x + cwid - 0.6, y, w: 0.48, h: ch, fontFace: FB, bold: true, fontSize: 18, color: t.n ? TEAL : GRAYC, align: 'right', valign: 'middle', margin: 0 });
     });
   }
+  }
 
   /* 3. Year-wise Questions Vector Bar Chart Slide (when PYQ years >= 2020 exist) */
+  if (!d.noStats && !d.perQ) {
   const firstYr = 2020, lastYr = yrs.length ? Math.max(2025, yrs[yrs.length - 1]) : 0;
   if (lastYr >= firstYr) {
     const s = pptx.addSlide();
     s.background = { color: BLACK };
     s.addText([
       { text: 'Questions per year', options: { fontFace: FH, bold: true, fontSize: 28, color: WHITE, paraSpaceAfter: 6, breakLine: true } },
-      { text: (d.chapter || 'Selected Questions') + ' · ' + kindLabel + ' · 2020 onwards', options: { fontFace: FB, bold: true, fontSize: 13, color: CORAL, charSpacing: 2 } }
+      { text: (d.chapter || (d.bucket === 'KCET' ? 'KCET Mathematics' : 'Selected Questions')) + ' · ' + kindLabel + ' · 2020 onwards', options: { fontFace: FB, bold: true, fontSize: 13, color: CORAL, charSpacing: 2 } }
     ], { x: 0.5, y: 0.22, w: 9.95, h: 1.15, valign: 'top', margin: 0 });
     addLogoTopRight(s, 2.1, 0.22);
 
@@ -967,6 +970,7 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
       s.addText(yr, { x: chartX + idx * slotW, y: chartY + chartH + 0.08, w: slotW, h: 0.32, fontFace: FB, bold: true, fontSize: 11, color: WHITE, align: 'center', valign: 'top', margin: 0 });
     });
   }
+  }
 
   /* 4+. One Question Per Slide (Strict 24pt font, Smart Given vs To-Find math coloring, aligned left Coral bar) */
   const ansText = q => /^[A-D](,\s*[A-D])*$/.test(q.a || '') ? q.a.split(/,\s*/).map(l => '(' + l + ')').join(', ') : (q.a || '—');
@@ -974,9 +978,11 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
   const examOf = q => {
     const qid = String(q.i || q.id || '');
     const pm = (d.meta && (d.meta[qid] || d.meta[q.i] || d.meta[q.id])) || {};
-    const exName = q.ex || q.exam || pm.exam || (qid.startsWith('KCET') ? 'KCET' : (qid.startsWith('JA') || qid.startsWith('IIT') ? 'JEE Advanced' : (qid.startsWith('AIEEE') ? 'AIEEE' : '')));
-    if (exName === 'KCET' || q.e === 'KCET' || d.bucket === 'KCET' || /\bKCET\b/i.test(String(q.p || pm.paper || ''))) return ['KCET', PURPLE];
-    if (exName === 'AIEEE' || q.e === 'AIEEE' || /\bAIEEE\b/i.test(String(q.p || pm.paper || ''))) return ['AIEEE', GREEN];
+    const isK = q.e === 'KCET' || q.ex === 'KCET' || q.exam === 'KCET' || pm.exam === 'KCET' || qid.startsWith('KCET') || d.bucket === 'KCET' || /\bKCET\b/i.test(String(q.p || pm.paper || ''));
+    if (isK) return ['KCET', PURPLE];
+    const isA = q.e === 'AIEEE' || q.ex === 'AIEEE' || q.exam === 'AIEEE' || pm.exam === 'AIEEE' || qid.startsWith('AIEEE') || /\bAIEEE\b/i.test(String(q.p || pm.paper || ''));
+    if (isA) return ['AIEEE', GREEN];
+    const exName = q.ex || q.exam || pm.exam || (qid.startsWith('JA') || qid.startsWith('IIT') ? 'JEE Advanced' : '');
     if (d.perQ) {
       if (q.s === 'P' || q.source === 'PYQ') {
         if (q.e === 'Adv' || exName === 'JEE Advanced' || exName === 'IIT' || /\b(JEE Advanced|IIT)\b/i.test(String(q.p || pm.paper || ''))) return ['JEE ADVANCED', RED];
@@ -999,9 +1005,9 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
     const pillText = practice ? exam[0] : (when ? exam[0] + ' · ' + when : exam[0]);
     const pillW = Math.min(7.8, Math.max(2.2, 0.5 + pillText.length * 0.135));
 
-    // Ques box
+    // Ques box (Georgia bold 20pt)
     s.addShape('roundRect', { x: 0.5, y: 0.3, w: 1.05, h: 0.42, fill: { type: 'none' }, line: { color: CORAL, width: 2 }, rectRadius: 0.1 });
-    s.addText('Ques', { x: 0.5, y: 0.3, w: 1.05, h: 0.42, fontFace: FH, bold: true, fontSize: 22, color: WHITE, align: 'center', valign: 'middle', margin: 0 });
+    s.addText('Ques', { x: 0.5, y: 0.3, w: 1.05, h: 0.42, fontFace: FH, bold: true, fontSize: 20, color: WHITE, align: 'center', valign: 'middle', margin: 0 });
 
     // Exam/Shift pill
     s.addShape('roundRect', { x: 1.7, y: 0.3, w: pillW, h: 0.42, fill: { type: 'none' }, line: { color: exam[1], width: 1.25 }, rectRadius: 0.21 });
@@ -1012,6 +1018,11 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
     if (lvl) {
       s.addShape('roundRect', { x: lvX, y: 0.3, w: lvW, h: 0.42, fill: { type: 'none' }, line: { color: LVC[lvl], width: 1.25 }, rectRadius: 0.21 });
       s.addText(lvl, { x: lvX, y: 0.3, w: lvW, h: 0.42, fontFace: FB, bold: true, fontSize: 16, color: LVC[lvl], align: 'center', valign: 'middle', margin: 0 });
+    }
+
+    // Topic on the same row (PYQ ChapterWise PDF tab only)
+    if (!d.noTopic && !d.perQ && q._t) {
+      s.addText(String(q._t), { x: 7.2, y: 0.3, w: (924 / 72) - 7.2, h: 0.42, fontFace: FB, bold: true, fontSize: 14, color: YEL, align: 'right', valign: 'middle', margin: 0 });
     }
 
     // Top-right Avanti Logo
@@ -1088,7 +1099,7 @@ async function buildCwPptx(PptxGenJS, JSZip, d, H) {
     s.addText(clLabel + '  ·  ' + chLabel, { x: 4.17, y: 0.9, w: 5.0, h: 0.42, fontFace: FB, bold: true, fontSize: 13, color: CORAL, align: 'center', valign: 'middle', charSpacing: 2, margin: 0 });
     s.addText('Thank you', { x: 0.5, y: 1.9, w: 12.33, h: 1.9, fontFace: FH, bold: true, fontSize: 72, color: CORAL, align: 'center', valign: 'middle', margin: 0 });
     s.addShape('rect', { x: 6.17, y: 4.0, w: 1.0, h: 0.07, fill: { color: CORAL }, line: { type: 'none' } });
-    s.addText(d.chapter || 'JEE Mathematics', { x: 0.5, y: 4.3, w: 12.33, h: 0.8, fontFace: FH, bold: true, fontSize: 30, color: WHITE, align: 'center', valign: 'middle', margin: 0 });
+    s.addText(d.chapter || (d.bucket === 'KCET' ? 'KCET Mathematics' : 'JEE Mathematics'), { x: 0.5, y: 4.3, w: 12.33, h: 0.8, fontFace: FH, bold: true, fontSize: 30, color: WHITE, align: 'center', valign: 'middle', margin: 0 });
     s.addText(kindLabel + ' · ' + d.count + ' questions', { x: 0.5, y: 5.1, w: 12.33, h: 0.5, fontFace: FB, fontSize: 16, color: GRAYC, align: 'center', valign: 'middle', margin: 0 });
     s.addText('Avanti Fellows', { x: 0.5, y: 6.7, w: 12.33, h: 0.4, fontFace: FB, fontSize: 12, color: GRAYC, align: 'center', valign: 'middle', charSpacing: 2, margin: 0 });
   }
@@ -1112,9 +1123,9 @@ async function buildPptx(PptxGenJS, JSZip, pages, H) {
     tm.set(tName, (tm.get(tName) || 0) + 1);
   });
   const topics = [...tm.entries()].map(([name, n]) => ({ name, n }));
-  const ex = [...new Set(allQs.filter(q => q.s === 'P').map(q => q.ex || q.e || q.exam))];
-  const isKcet = ex.length === 1 && ex[0] === 'KCET';
-  const isAdv = ex.length === 1 && ex[0] === 'Adv';
+  const pyqEx = [...new Set(allQs.filter(q => q.s === 'P').map(q => (q.e === 'KCET' || q.ex === 'KCET' || String(q.i || q.id || '').startsWith('KCET')) ? 'KCET' : (q.e === 'Adv' || q.ex === 'JEE Advanced' || q.ex === 'IIT' ? 'Adv' : 'Main')))];
+  const isKcet = pyqEx.length === 1 && pyqEx[0] === 'KCET';
+  const isAdv = pyqEx.length === 1 && pyqEx[0] === 'Adv';
   const bucket = isKcet ? 'KCET' : (isAdv ? 'Adv' : 'Main');
   const d = {
     chapter: p0.title || (c0 ? c0.n : (isKcet ? 'KCET Mathematics' : 'JEE Mathematics')),

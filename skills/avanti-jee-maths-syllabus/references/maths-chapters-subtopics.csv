@@ -1,0 +1,291 @@
+chapter_no,chapter_code,chapter_name,subtopic_no,subtopic_name,subtopic_code
+1,11M1,Fundamental of Mathematics,1,Introduction,JM-11M1.1
+1,11M1,Fundamental of Mathematics,2,Intervals,JM-11M1.2
+1,11M1,Fundamental of Mathematics,3,Inequalities,JM-11M1.3
+1,11M1,Fundamental of Mathematics,4,Generalised Method of Interval for Solving Inequalities,JM-11M1.4
+1,11M1,Fundamental of Mathematics,5,Solving Irrational Inequalities,JM-11M1.5
+1,11M1,Fundamental of Mathematics,6,Absolute Values (Modulus) of Real Number,JM-11M1.6
+1,11M1,Fundamental of Mathematics,7,Exponential Function,JM-11M1.7
+1,11M1,Fundamental of Mathematics,8,Logarithmic Function,JM-11M1.8
+1,11M1,Fundamental of Mathematics,9,Fundamental Laws of Logarithm,JM-11M1.9
+1,11M1,Fundamental of Mathematics,10,Logarithmic Equation,JM-11M1.10
+1,11M1,Fundamental of Mathematics,11,Logarithmic Inequalities,JM-11M1.11
+2,11M2,"Sets, Relations and Functions",1,Introduction,JM-11M2.1
+2,11M2,"Sets, Relations and Functions",2,Definitions,JM-11M2.2
+2,11M2,"Sets, Relations and Functions",3,Methods of Representing Sets,JM-11M2.3
+2,11M2,"Sets, Relations and Functions",4,Different Types of Sets,JM-11M2.4
+2,11M2,"Sets, Relations and Functions",5,Subsets,JM-11M2.5
+2,11M2,"Sets, Relations and Functions",6,Power Sets,JM-11M2.6
+2,11M2,"Sets, Relations and Functions",7,Universal Sets,JM-11M2.7
+2,11M2,"Sets, Relations and Functions",8,Venn Diagram,JM-11M2.8
+2,11M2,"Sets, Relations and Functions",9,Operation on Sets,JM-11M2.9
+2,11M2,"Sets, Relations and Functions",10,Complete of a Set,JM-11M2.10
+2,11M2,"Sets, Relations and Functions",11,Intervals as a Subsets of R,JM-11M2.11
+2,11M2,"Sets, Relations and Functions",12,Important Results Related to Cardinal Number of Sets,JM-11M2.12
+2,11M2,"Sets, Relations and Functions",13,Cartesian Product of Sets,JM-11M2.13
+2,11M2,"Sets, Relations and Functions",14,Relations,JM-11M2.14
+2,11M2,"Sets, Relations and Functions",15,Inverse Relation,JM-11M2.15
+2,11M2,"Sets, Relations and Functions",16,Types of Relation,JM-11M2.16
+2,11M2,"Sets, Relations and Functions",17,Basics of Function,JM-11M2.17
+2,11M2,"Sets, Relations and Functions",18,Some Standard Functions and their Graphs,JM-11M2.18
+2,11M2,"Sets, Relations and Functions",19,Finding Domain of a Function,JM-11M2.19
+2,11M2,"Sets, Relations and Functions",20,Finding Range of a Function,JM-11M2.20
+3,11M3,Trigonometry,1,Introduction,JM-11M3.1
+3,11M3,Trigonometry,2,Trigonometric Functions of Acute Angles,JM-11M3.2
+3,11M3,Trigonometry,3,Measurement of an Angle,JM-11M3.3
+3,11M3,Trigonometry,4,Angles in Trigonometry,JM-11M3.4
+3,11M3,Trigonometry,5,Trigonometric Functions of Any Angle,JM-11M3.5
+3,11M3,Trigonometry,6,Trigonometric Functions Defined As Circular Functions,JM-11M3.6
+3,11M3,Trigonometry,7,Graph and Other Useful Data of Trigonometric Functions,JM-11M3.7
+3,11M3,Trigonometry,8,Trigonometric Ratios of Allied Angles,JM-11M3.8
+3,11M3,Trigonometry,9,Trigonometric Ratios for Compound Angles,JM-11M3.9
+3,11M3,Trigonometry,10,Transformation Formulae,JM-11M3.10
+3,11M3,Trigonometry,11,Trigonometric Ratios of Multiple and Sub-multiple Angles,JM-11M3.11
+3,11M3,Trigonometry,12,Values of Trigonometric Ratios of Standard Angles,JM-11M3.12
+3,11M3,Trigonometry,13,Conditional Identities,JM-11M3.13
+3,11M3,Trigonometry,14,Some Important Results and Their Applications,JM-11M3.14
+3,11M3,Trigonometry,15,Trigonometric Equations: Introduction,JM-11M3.15
+3,11M3,Trigonometry,16,Solution or Root of a Trigonometric Equation,JM-11M3.16
+3,11M3,Trigonometry,17,General Solution of Some Standard Equations,JM-11M3.17
+3,11M3,Trigonometry,18,Problems Based on Extreme Values of Functions,JM-11M3.18
+3,11M3,Trigonometry,19,Solving Inequalities and Use of Graphs,JM-11M3.19
+4,11M4,Quadratic Equations,1,Introduction,JM-11M4.1
+4,11M4,Quadratic Equations,2,Key Points in Solving an Equation,JM-11M4.2
+4,11M4,Quadratic Equations,3,Remainder and Factor Theorem,JM-11M4.3
+4,11M4,Quadratic Equations,4,Repeated Roots,JM-11M4.4
+4,11M4,Quadratic Equations,5,Identity Equations and Inequalities,JM-11M4.5
+4,11M4,Quadratic Equations,6,Quadratic Equation,JM-11M4.6
+4,11M4,Quadratic Equations,7,Common Roots,JM-11M4.7
+4,11M4,Quadratic Equations,8,General Quadratic Expression in Two Variables,JM-11M4.8
+4,11M4,Quadratic Equations,9,Relation Between Coefficients and Roots of n Degree Equation,JM-11M4.9
+4,11M4,Quadratic Equations,10,Quadratic Function,JM-11M4.10
+4,11M4,Quadratic Equations,11,Location of Roots,JM-11M4.11
+5,11M5,Complex Numbers,1,Introduction,JM-11M5.1
+5,11M5,Complex Numbers,2,Integral Power of Iota (i),JM-11M5.2
+5,11M5,Complex Numbers,3,Algebraic Operations With Complex Numbers,JM-11M5.3
+5,11M5,Complex Numbers,4,Geometrical Representation of a Complex Number,JM-11M5.4
+5,11M5,Complex Numbers,5,Polar Form of a Complex Number,JM-11M5.5
+5,11M5,Complex Numbers,6,Euler’s Form of a Complex Number,JM-11M5.6
+5,11M5,Complex Numbers,7,Conjugate of a Complex Number,JM-11M5.7
+5,11M5,Complex Numbers,8,Solving Complex Equations,JM-11M5.8
+5,11M5,Complex Numbers,9,Properties of Modulus,JM-11M5.9
+5,11M5,Complex Numbers,10,Geometrical Representation of Addition and Subtraction of Complex Numbers,JM-11M5.10
+5,11M5,Complex Numbers,11,Properties of Arguments,JM-11M5.11
+5,11M5,Complex Numbers,12,De Moivre’s Theorem,JM-11M5.12
+5,11M5,Complex Numbers,13,Cube Roots of Unity,JM-11M5.13
+5,11M5,Complex Numbers,14,The nth Root of Unity,JM-11M5.14
+5,11M5,Complex Numbers,15,Geometry With Complex Numbers,JM-11M5.15
+5,11M5,Complex Numbers,16,Concept of Rotation,JM-11M5.16
+5,11M5,Complex Numbers,17,Standard Loci in the Argand Plane,JM-11M5.17
+6,11M6,Sequences and Series,1,Introduction,JM-11M6.1
+6,11M6,Sequences and Series,2,Defining Series and Progression,JM-11M6.2
+6,11M6,Sequences and Series,3,Arithmetic Progression (A.P.),JM-11M6.3
+6,11M6,Sequences and Series,4,Geometric Progression (G.P.),JM-11M6.4
+6,11M6,Sequences and Series,5,Harmonic Progression (H.P.),JM-11M6.5
+6,11M6,Sequences and Series,6,"Properties of A.M. ,G.M. and H.M. of Two Positive Real Numbers",JM-11M6.6
+6,11M6,Sequences and Series,7,Summation by Sigma Operator,JM-11M6.7
+6,11M6,Sequences and Series,8,Sum of Series by Method of Difference,JM-11M6.8
+6,11M6,Sequences and Series,9,Sum of Some Special Series,JM-11M6.9
+7,11M7,Permutations and Combinations,1,Introduction,JM-11M7.1
+7,11M7,Permutations and Combinations,2,Fundamental Principle of Counting,JM-11M7.2
+7,11M7,Permutations and Combinations,3,Factorial Notation,JM-11M7.3
+7,11M7,Permutations and Combinations,4,Permutation,JM-11M7.4
+7,11M7,Permutations and Combinations,5,Combination,JM-11M7.5
+7,11M7,Permutations and Combinations,6,Division and Distribution,JM-11M7.6
+7,11M7,Permutations and Combinations,7,Derangement,JM-11M7.7
+8,11M8,Binomial Theorem,1,Introduction,JM-11M8.1
+8,11M8,Binomial Theorem,2,Some Standard Expansions,JM-11M8.2
+8,11M8,Binomial Theorem,3,Properties of Binomial Coefficients,JM-11M8.3
+8,11M8,Binomial Theorem,4,Tips For Finding Coefficients of Required Terms,JM-11M8.4
+8,11M8,Binomial Theorem,5,Multinomial Expansions,JM-11M8.5
+8,11M8,Binomial Theorem,6,Analysis of Binomial Expansion,JM-11M8.6
+8,11M8,Binomial Theorem,7,Applications of Binomial Expansion,JM-11M8.7
+8,11M8,Binomial Theorem,8,Sum of Series,JM-11M8.8
+8,11M8,Binomial Theorem,9,Series From Multiplication of Two Series,JM-11M8.9
+8,11M8,Binomial Theorem,10,Binomial Theorem for Any Index,JM-11M8.10
+9,11M9,Straight Lines,1,Introduction,JM-11M9.1
+9,11M9,Straight Lines,2,Distance Formula,JM-11M9.2
+9,11M9,Straight Lines,3,Area of Triangle and Polygon,JM-11M9.3
+9,11M9,Straight Lines,4,Section Formula,JM-11M9.4
+9,11M9,Straight Lines,5,Different Centers of Triangle,JM-11M9.5
+9,11M9,Straight Lines,6,Shifting of Origin,JM-11M9.6
+9,11M9,Straight Lines,7,Locus and Equation to a Locus,JM-11M9.7
+9,11M9,Straight Lines,8,Slope (Gradient) of a Line,JM-11M9.8
+9,11M9,Straight Lines,9,Different Forms of Straight Line,JM-11M9.9
+9,11M9,Straight Lines,10,Distance Form of a Line (Parametric Form),JM-11M9.10
+9,11M9,Straight Lines,11,Distance of a Point From the Given Line,JM-11M9.11
+9,11M9,Straight Lines,12,Image of a Point With Respect to the Line Mirror,JM-11M9.12
+9,11M9,Straight Lines,13,Position of Points Relative to a Line,JM-11M9.13
+9,11M9,Straight Lines,14,Concurrency of Three Lines,JM-11M9.14
+9,11M9,Straight Lines,15,Pair of Straight Lines,JM-11M9.15
+10,11M10,Circle,1,Introduction,JM-11M10.1
+10,11M10,Circle,2,Definition of Circle,JM-11M10.2
+10,11M10,Circle,3,Equation of Circle,JM-11M10.3
+10,11M10,Circle,4,Intercepts Made on the Axes by a Circle,JM-11M10.4
+10,11M10,Circle,5,Equation of Circle With Typical Conditions,JM-11M10.5
+10,11M10,Circle,6,Family of Circles,JM-11M10.6
+10,11M10,Circle,7,Position of a Point With Respect to a Circle,JM-11M10.7
+10,11M10,Circle,8,Intersection of a Line and a Circle,JM-11M10.8
+10,11M10,Circle,9,"Segments of Secants, Chords, and Tangents",JM-11M10.9
+10,11M10,Circle,10,Director Circle,JM-11M10.10
+10,11M10,Circle,11,Chord of Contact,JM-11M10.11
+10,11M10,Circle,12,Equation of the Chord Bisected at a Given Point,JM-11M10.12
+10,11M10,Circle,13,Different Cases of Two Circles,JM-11M10.13
+10,11M10,Circle,14,Radical Axis,JM-11M10.14
+10,11M10,Circle,15,Common Chord of Two Circles,JM-11M10.15
+11,11M11,Conic Sections,1,Introduction,JM-11M11.1
+11,11M11,Conic Sections,2,Conic Section as Locus of a Point,JM-11M11.2
+11,11M11,Conic Sections,3,Equation of Parabola in Different Cases,JM-11M11.3
+11,11M11,Conic Sections,4,Position of a Point With Respect to a Parabola,JM-11M11.4
+11,11M11,Conic Sections,5,Properties of Focal Chord,JM-11M11.5
+11,11M11,Conic Sections,6,Intersection of a Line and a Parabola,JM-11M11.6
+11,11M11,Conic Sections,7,Equation of Chord of Contact,JM-11M11.7
+11,11M11,Conic Sections,8,"Equation of Chord Whose Mid Point is (x₁, y₁)",JM-11M11.8
+11,11M11,Conic Sections,9,Standard Equation of Ellipse,JM-11M11.9
+11,11M11,Conic Sections,10,Some Important Properties of Ellipse,JM-11M11.10
+11,11M11,Conic Sections,11,Intersection of a Line and an Ellipse,JM-11M11.11
+11,11M11,Conic Sections,12,Equation of Chord,JM-11M11.12
+11,11M11,Conic Sections,13,Standard Equation of Hyperbola,JM-11M11.13
+11,11M11,Conic Sections,14,Intersection of a Line and a Hyperbola,JM-11M11.14
+11,11M11,Conic Sections,15,Equation of Chord of Contact,JM-11M11.15
+11,11M11,Conic Sections,16,Rectangular Hyperbola,JM-11M11.16
+12,11M12,Statistics,1,Introduction,JM-11M12.1
+12,11M12,Statistics,2,Arithmetic Mean,JM-11M12.2
+12,11M12,Statistics,3,Combined Mean,JM-11M12.3
+12,11M12,Statistics,4,Median,JM-11M12.4
+12,11M12,Statistics,5,Mode,JM-11M12.5
+12,11M12,Statistics,6,Dispersion,JM-11M12.6
+12,11M12,Statistics,7,Range,JM-11M12.7
+12,11M12,Statistics,8,Mean Deviation,JM-11M12.8
+12,11M12,Statistics,9,Standard Deviation,JM-11M12.9
+12,11M12,Statistics,10,Combined Standard Deviation,JM-11M12.10
+13,12M13,Functions,1,Introduction,JM-12M13.1
+13,12M13,Functions,2,Function,JM-12M13.2
+13,12M13,Functions,3,"Domain, Co-domain and Range",JM-12M13.3
+13,12M13,Functions,4,Trigonometric Functions,JM-12M13.4
+13,12M13,Functions,5,Inverse Trigonometric Functions,JM-12M13.5
+13,12M13,Functions,6,Exponential and Logarithmic Functions,JM-12M13.6
+13,12M13,Functions,7,Greatest Integer and Fractional Part Function,JM-12M13.7
+13,12M13,Functions,8,"Functions of the Form f(x) = max.{g1(x), g2(x), …, gn(x)} or f(x) = min.{g1(x), g2(x), …, gn(x)}",JM-12M13.8
+13,12M13,Functions,9,Different Types of Mappings,JM-12M13.9
+13,12M13,Functions,10,Even and Odd Functions,JM-12M13.10
+13,12M13,Functions,11,Odd and Even Extension of Function,JM-12M13.11
+13,12M13,Functions,12,Periodic Functions,JM-12M13.12
+13,12M13,Functions,13,Composite Function,JM-12M13.13
+13,12M13,Functions,14,Inverse Functions,JM-12M13.14
+13,12M13,Functions,15,Identical Function,JM-12M13.15
+14,12M14,Inverse Trigonometric Functions,1,Introduction,JM-12M14.1
+14,12M14,Inverse Trigonometric Functions,2,Inverse Functions,JM-12M14.2
+14,12M14,Inverse Trigonometric Functions,3,Inverse Trigonometric (Circular) Functions,JM-12M14.3
+14,12M14,Inverse Trigonometric Functions,4,"Domain, Range, and Graphs of Inverse Trigonometric Functions",JM-12M14.4
+14,12M14,Inverse Trigonometric Functions,5,Properties of Inverse Trigonometric Functions,JM-12M14.5
+14,12M14,Inverse Trigonometric Functions,6,Sum of Complementary Angles,JM-12M14.6
+14,12M14,Inverse Trigonometric Functions,7,Conversion of One Inverse Function to Another Inverse Function,JM-12M14.7
+14,12M14,Inverse Trigonometric Functions,8,Problems Based on Substitution,JM-12M14.8
+14,12M14,Inverse Trigonometric Functions,9,Formulas for Sum and Difference of Inverse Trigonometric Functions,JM-12M14.9
+14,12M14,Inverse Trigonometric Functions,10,Sum of Multiple Angles,JM-12M14.10
+15,12M15,Matrices and Determinants,1,Introduction,JM-12M15.1
+15,12M15,Matrices and Determinants,2,Classification of Matrices,JM-12M15.2
+15,12M15,Matrices and Determinants,3,Determinant of a Square Matrix,JM-12M15.3
+15,12M15,Matrices and Determinants,4,Algebra of Matrices,JM-12M15.4
+15,12M15,Matrices and Determinants,5,Conjugate of a Matrix,JM-12M15.5
+15,12M15,Matrices and Determinants,6,Special Matrices,JM-12M15.6
+15,12M15,Matrices and Determinants,7,Adjoint and Inverse of a Square Matrix,JM-12M15.7
+15,12M15,Matrices and Determinants,8,Equivalent Matrices,JM-12M15.8
+15,12M15,Matrices and Determinants,9,System of Simultaneous Linear Equations,JM-12M15.9
+15,12M15,Matrices and Determinants,10,Introduction to Determinants,JM-12M15.10
+15,12M15,Matrices and Determinants,11,Properties of Determinants,JM-12M15.11
+15,12M15,Matrices and Determinants,12,Some Important Determinants,JM-12M15.12
+15,12M15,Matrices and Determinants,13,Product of Two Determinants,JM-12M15.13
+15,12M15,Matrices and Determinants,14,Differentiation of a Determinant,JM-12M15.14
+15,12M15,Matrices and Determinants,15,System of Linear Equations,JM-12M15.15
+16,12M16,Limits,1,Introduction,JM-12M16.1
+16,12M16,Limits,2,Concept of Limit,JM-12M16.2
+16,12M16,Limits,3,Algebra of Limits,JM-12M16.3
+16,12M16,Limits,4,Evaluation of Algebraic Limits,JM-12M16.4
+16,12M16,Limits,5,Evaluation of Trigonometric Limits,JM-12M16.5
+16,12M16,Limits,6,Evaluation of Exponential and Logarithmic Limits,JM-12M16.6
+16,12M16,Limits,7,Limit of the form 'lim x→a (f(x))^g(x)',JM-12M16.7
+16,12M16,Limits,8,Finding Limit Using Expansion Formula,JM-12M16.8
+16,12M16,Limits,9,L’Hospital’s Rule for Evaluating Limits,JM-12M16.9
+17,12M17,Continuity and Differentiability,1,Introduction,JM-12M17.1
+17,12M17,Continuity and Differentiability,2,Continuity,JM-12M17.2
+17,12M17,Continuity and Differentiability,3,Types of Discontinuity,JM-12M17.3
+17,12M17,Continuity and Differentiability,4,Theorems on Continuity,JM-12M17.4
+17,12M17,Continuity and Differentiability,5,Continuity of Some Functions,JM-12M17.5
+17,12M17,Continuity and Differentiability,6,Differentiability,JM-12M17.6
+17,12M17,Continuity and Differentiability,7,Theorems on Differentiability,JM-12M17.7
+17,12M17,Continuity and Differentiability,8,Geometrical Meaning of a Derivative,JM-12M17.8
+17,12M17,Continuity and Differentiability,9,Derivative of Some Standard Functions,JM-12M17.9
+17,12M17,Continuity and Differentiability,10,Theorems on Derivatives,JM-12M17.10
+17,12M17,Continuity and Differentiability,11,Differentiation of Composite Functions (Chain Rule),JM-12M17.11
+17,12M17,Continuity and Differentiability,12,Differentiation Using Some Standard Substitutions,JM-12M17.12
+17,12M17,Continuity and Differentiability,13,Differentiation of Determinants,JM-12M17.13
+17,12M17,Continuity and Differentiability,14,Differentiation of Implicit Functions,JM-12M17.14
+17,12M17,Continuity and Differentiability,15,Differentiation of Functions in Parametric Form,JM-12M17.15
+17,12M17,Continuity and Differentiability,16,Differentiation of one function w.r.t. Other function,JM-12M17.16
+17,12M17,Continuity and Differentiability,17,Differentiation Using Logarithm,JM-12M17.17
+17,12M17,Continuity and Differentiability,18,Higher Order Derivatives,JM-12M17.18
+18,12M18,Application of Derivative,1,Introduction,JM-12M18.1
+18,12M18,Application of Derivative,2,Interpretation of dy/dx as a Rate Measure,JM-12M18.2
+18,12M18,Application of Derivative,3,Approximations,JM-12M18.3
+18,12M18,Application of Derivative,4,Monotonicity,JM-12M18.4
+18,12M18,Application of Derivative,5,Extremum,JM-12M18.5
+18,12M18,Application of Derivative,6,Tests for Local Maximum and Minimum,JM-12M18.6
+18,12M18,Application of Derivative,7,Concept of Global (Absolute) Maximum and Minimum,JM-12M18.7
+18,12M18,Application of Derivative,8,Applications of Maxima and Minima,JM-12M18.8
+19,12M19,Indefinite Integration,1,Introduction,JM-12M19.1
+19,12M19,Indefinite Integration,2,Elementary Integration,JM-12M19.2
+19,12M19,Indefinite Integration,3,Integration by Substitution,JM-12M19.3
+19,12M19,Indefinite Integration,4,Integration of Functions Which Involve Quadratic Function,JM-12M19.4
+19,12M19,Indefinite Integration,5,Integration by Parts,JM-12M19.5
+19,12M19,Indefinite Integration,6,Integration of Typical Irrational Functions,JM-12M19.6
+19,12M19,Indefinite Integration,7,Integration by Partial Fractions,JM-12M19.7
+20,12M20,Definite Integration and Area Under the Curve,1,Introduction to Definite Integration,JM-12M20.1
+20,12M20,Definite Integration and Area Under the Curve,2,Properties of Definite Integration,JM-12M20.2
+20,12M20,Definite Integration and Area Under the Curve,3,Definite Integration of Odd and Even Functions,JM-12M20.3
+20,12M20,Definite Integration and Area Under the Curve,4,Definite Integration of Periodic Functions,JM-12M20.4
+20,12M20,Definite Integration and Area Under the Curve,5,Leibnitz’s Rule,JM-12M20.5
+20,12M20,Definite Integration and Area Under the Curve,6,Inequalities,JM-12M20.6
+20,12M20,Definite Integration and Area Under the Curve,7,Different Cases of Bounded Area,JM-12M20.7
+20,12M20,Definite Integration and Area Under the Curve,8,Curve Tracing,JM-12M20.8
+21,12M21,Differential Equations,1,Introduction to Differential Equations,JM-12M21.1
+21,12M21,Differential Equations,2,Solution of Differential Equations Using Variable Separation Method,JM-12M21.2
+21,12M21,Differential Equations,3,Solution of Homogeneous Differential Equations,JM-12M21.3
+21,12M21,Differential Equations,4,Solution of Linear Differential Equations,JM-12M21.4
+21,12M21,Differential Equations,5,General Form of Variable Separation,JM-12M21.5
+21,12M21,Differential Equations,6,Applications of Differential Equations,JM-12M21.6
+22,12M22,Vectors,1,Introduction,JM-12M22.1
+22,12M22,Vectors,2,Definition of Vector,JM-12M22.2
+22,12M22,Vectors,3,Position Vector,JM-12M22.3
+22,12M22,Vectors,4,Direction Cosines,JM-12M22.4
+22,12M22,Vectors,5,Types of Vectors,JM-12M22.5
+22,12M22,Vectors,6,Addition of Vectors,JM-12M22.6
+22,12M22,Vectors,7,Components of a Vector,JM-12M22.7
+22,12M22,Vectors,8,Multiplication of a Vector by a Scalar,JM-12M22.8
+22,12M22,Vectors,9,Vector Joining Two Points,JM-12M22.9
+22,12M22,Vectors,10,Section Formula,JM-12M22.10
+22,12M22,Vectors,11,Vector Along the Bisector of Given Two Vectors,JM-12M22.11
+22,12M22,Vectors,12,"Linear Combination, Linear Independence and Linear Dependence",JM-12M22.12
+22,12M22,Vectors,13,Dot (Scalar) Product,JM-12M22.13
+22,12M22,Vectors,14,Applications of Dot (Scalar) Product,JM-12M22.14
+22,12M22,Vectors,15,Vector (or Cross) Product of Two Vectors,JM-12M22.15
+23,12M23,Three Dimensional Geometry,1,Introduction,JM-12M23.1
+23,12M23,Three Dimensional Geometry,2,Direction Cosines and Direction Ratios,JM-12M23.2
+23,12M23,Three Dimensional Geometry,3,Distance Formula,JM-12M23.3
+23,12M23,Three Dimensional Geometry,4,Section Formula,JM-12M23.4
+23,12M23,Three Dimensional Geometry,5,Equation of Straight Line,JM-12M23.5
+23,12M23,Three Dimensional Geometry,6,Angle Between Two Lines,JM-12M23.6
+23,12M23,Three Dimensional Geometry,7,Shortest Distance Between Two Lines,JM-12M23.7
+24,12M24,Probability,1,Introduction,JM-12M24.1
+24,12M24,Probability,2,Some Definitions,JM-12M24.2
+24,12M24,Probability,3,Algebra of Events,JM-12M24.3
+24,12M24,Probability,4,Different Types of Events,JM-12M24.4
+24,12M24,Probability,5,Axiomatic Approach to Probability,JM-12M24.5
+24,12M24,Probability,6,Mathematical or Classical Definition of Probability,JM-12M24.6
+24,12M24,Probability,7,Addition Theorem of Probability,JM-12M24.7
+24,12M24,Probability,8,Conditional Probability,JM-12M24.8
+24,12M24,Probability,9,Multiplication Theorem of Probability,JM-12M24.9
+24,12M24,Probability,10,Independent Events,JM-12M24.10
+24,12M24,Probability,11,Total Probability Theorem,JM-12M24.11
+24,12M24,Probability,12,Bayes’ Theorem,JM-12M24.12
