@@ -35,12 +35,9 @@ async function startServer() {
     }
   });
 
-  // Serve the full math teacher dashboard directly
+  // Serve the dashboard
   app.get('/dashboard', (_req, res) => {
-    let targetPath = path.resolve(process.cwd(), 'public/dashboard.html');
-    if (!fs.existsSync(targetPath)) {
-      targetPath = path.resolve(process.cwd(), 'uploaded_dashboard.html');
-    }
+    const targetPath = path.resolve(process.cwd(), 'index.html');
     if (fs.existsSync(targetPath)) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       return res.sendFile(targetPath);
