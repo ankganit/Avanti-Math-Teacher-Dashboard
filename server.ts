@@ -37,7 +37,10 @@ async function startServer() {
 
   // Serve the full math teacher dashboard directly
   app.get('/dashboard', (_req, res) => {
-    const targetPath = path.resolve(process.cwd(), 'uploaded_dashboard.html');
+    let targetPath = path.resolve(process.cwd(), 'public/dashboard.html');
+    if (!fs.existsSync(targetPath)) {
+      targetPath = path.resolve(process.cwd(), 'uploaded_dashboard.html');
+    }
     if (fs.existsSync(targetPath)) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       return res.sendFile(targetPath);

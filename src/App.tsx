@@ -39,7 +39,7 @@ export default function App() {
   // Export / Download HTML file
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/dashboard';
+    link.href = './dashboard.html';
     link.download = 'Math_Teacher_Dashboard.html';
     document.body.appendChild(link);
     link.click();
@@ -162,7 +162,7 @@ export default function App() {
             </button>
 
             <a
-              href="/dashboard"
+              href="./dashboard.html"
               target="_blank"
               rel="noreferrer"
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition cursor-pointer"
@@ -234,7 +234,7 @@ export default function App() {
         <iframe
           key={key}
           ref={iframeRef}
-          src="/dashboard"
+          src="./dashboard.html"
           title="Math Teacher Dashboard"
           onLoad={() => setHasLoaded(true)}
           className="w-full flex-1 border-0 min-h-[calc(100vh-60px)]"
