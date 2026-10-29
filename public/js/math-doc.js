@@ -326,7 +326,7 @@ function wd(nodes) {
 }
 const width = s => split(s).reduce((a, p) => a + (p.t === 'text' ? p.s.length * 0.5 : wd(parse(p.s))), 0);
 
-/* split "text \( maths \) text \[ display \]" into parts */
+/* split "text \( maths \) text \[ display \]" or "$...$" or "$$...$$" into parts */
 function split(s) {
   const out = []; let i = 0, buf = '';
   s = String(s == null ? '' : s);
@@ -334,6 +334,14 @@ function split(s) {
     if (s[i] === '\\' && (s[i + 1] === '(' || s[i + 1] === '[')) {
       const close = s[i + 1] === '(' ? '\\)' : '\\]', j = s.indexOf(close, i + 2);
       if (j > 0) { if (buf) out.push({ t: 'text', s: buf }); buf = ''; out.push({ t: 'math', s: s.slice(i + 2, j).trim(), display: s[i + 1] === '[' }); i = j + 2; continue; }
+    } else if (s[i] === '$' && s[i + 1] === '$') {
+      const j = s.indexOf('$$', i + 2);
+      if (j > 0) { if (buf) out.push({ t: 'text', s: buf }); buf = ''; out.push({ t: 'math', s: s.slice(i + 2, j).trim(), display: true }); i = j + 2; continue; }
+    } else if (s[i] === '$') {
+      const j = s.indexOf('$', i + 1);
+      if (j > 0 && !/\n/.test(s.slice(i + 1, j))) {
+        if (buf) out.push({ t: 'text', s: buf }); buf = ''; out.push({ t: 'math', s: s.slice(i + 1, j).trim(), display: false }); i = j + 1; continue;
+      }
     }
     buf += s[i]; i++;
   }

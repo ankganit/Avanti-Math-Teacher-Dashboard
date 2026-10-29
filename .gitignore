@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 !.env.example
+.usage*
+*usage*.json
+local_usage*
+*.local

@@ -944,6 +944,17 @@ async function renderHandouts() {
   const dl = async (x, ext, bw) => {
     const name = base(x) + (bw ? '_BW' : '');
     if (!downloads) { toast('Downloads are not available in this view'); return; }
+    if (ext === 'pdf' && !bw && x.file) {
+      try {
+        const res = await window.vfsFetch('handouts/' + x.file);
+        if (res && res.ok) {
+          const blob = await res.blob();
+          await downloads.save({ filename: x.file, data: blob });
+          toast('Saved ' + x.file);
+          return;
+        }
+      } catch (e) {}
+    }
     try {
       await ensureDpp();
       const chQs = (BANK && BANK.qs || []).filter(q => q.cc === x.code);
@@ -1155,8 +1166,12 @@ function setTab(t) {
 }
 function setTabInner(t) {
   $('#viewQb').hidden = t !== 'qb'; $('#viewLib').hidden = t !== 'lib'; $('#viewCw').hidden = t !== 'cw'; $('#viewSw').hidden = t !== 'sw'; $('#viewHo').hidden = t !== 'ho'; $('#viewMust').hidden = t !== 'must'; $('#viewSyl').hidden = t !== 'syl';
+  const vt = $('#viewTeacher'); if (vt) vt.hidden = t !== 'teacher';
+  const vs = $('#viewStudent'); if (vs) vs.hidden = t !== 'student';
   document.querySelectorAll('[data-act="tab"]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === t)));
-  if (t === 'qb') qbInit(); else if (t === 'syl') renderSyl(); else if (t === 'ho') renderHandouts(); else if (t === 'must') ensureDpp().then(renderMust); else if (t === 'cw' || t === 'sw') ensureDpp().then(() => { renderPdfTab(t); setTimeout(rescale, 0); }); else ensureDpp().then(() => { renderLib(); setTimeout(rescale, 0); });
+  if (t === 'teacher') { if (window.PortalApp) window.PortalApp.renderTeacherView(); }
+  else if (t === 'student') { if (window.PortalApp) window.PortalApp.renderStudentView(); }
+  else if (t === 'qb') qbInit(); else if (t === 'syl') renderSyl(); else if (t === 'ho') renderHandouts(); else if (t === 'must') ensureDpp().then(renderMust); else if (t === 'cw' || t === 'sw') ensureDpp().then(() => { renderPdfTab(t); setTimeout(rescale, 0); }); else ensureDpp().then(() => { renderLib(); setTimeout(rescale, 0); });
   setTimeout(rescale, 0);
 }
 let MORE_OPEN = false;
@@ -1594,6 +1609,311 @@ async function renderSyl() {
     h('h3', { class: 'sy-band', text: 'Class 12' }), ...c12.map(chapterSection));
 }
 
+/* ---------- Usage Status Widget (Admin/Owner - Local Only) ---------- */
+let usageState = null;
+let usageTimerInterval = null;
+let usageOpen = false;
+
+async function fetchUsageData() {
+  try {
+    const res = await fetch('/api/usage?_t=' + Date.now(), { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      usageState = data;
+      try { localStorage.setItem('math_last_usage', JSON.stringify(data)); } catch (e) {}
+      return data;
+    }
+  } catch (e) {
+    console.warn('Could not fetch /api/usage:', e);
+  }
+  if (!usageState) {
+    try {
+      const cached = localStorage.getItem('math_last_usage');
+      if (cached) usageState = JSON.parse(cached);
+    } catch (e) {}
+  }
+  if (!usageState) {
+    const now = new Date();
+    const nowSec = Math.floor(Date.now() / 1000);
+    usageState = {
+      success: true,
+      user: 'ank.pcm@gmail.com',
+      model: 'gemini-3.8-flash',
+      isOwnerOnly: true,
+      currentConsumptionPercentage: 22.3,
+      tokensLeftMinPercentage: 87.5,
+      tokensLeftHourPercentage: 82.7,
+      tokensLeftDayPercentage: 77.8,
+      minute: { limit: 1000000, used: 125000, remaining: 875000, percentLeft: 87.5, percentConsumed: 12.5, resetSeconds: 60 - (nowSec % 60) },
+      hour: { limit: 15000000, used: 2600000, remaining: 12400000, percentLeft: 82.7, percentConsumed: 17.3, resetSeconds: 3600 - (nowSec % 3600) },
+      day: { limit: 40000000, used: 8900000, remaining: 31100000, percentLeft: 77.8, percentConsumed: 22.3, resetSeconds: 54000 },
+      lastUpdated: new Date().toISOString()
+    };
+  }
+  return usageState;
+}
+
+function fmtSec(sec) {
+  if (sec <= 0) return 'resets now';
+  if (sec < 60) return sec + 's';
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  if (m < 60) return m + 'm ' + (s > 0 ? s + 's' : '');
+  const h = Math.floor(m / 60);
+  const remM = m % 60;
+  return h + 'h ' + (remM > 0 ? remM + 'm' : '');
+}
+
+function fmtTokens(n) {
+  if (!n && n !== 0) return '0';
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(0) + 'k';
+  return String(n);
+}
+
+function renderUsageWidget() {
+  const host = $('#usageWidgetContainer');
+  if (!host) return;
+  host.innerHTML = '';
+  if (!usageState) return;
+
+  const leftDay = usageState.tokensLeftDayPercentage;
+  const leftHr = usageState.tokensLeftHourPercentage;
+  const leftMin = usageState.tokensLeftMinPercentage;
+  const consumed = usageState.currentConsumptionPercentage;
+
+  const dotClass = leftDay > 35 ? 'green' : (leftDay > 15 ? 'amber' : 'red');
+
+  const btn = h('button', {
+    type: 'button',
+    class: 'usage-widget-btn',
+    'aria-expanded': String(usageOpen),
+    title: 'Click to view token consumption & quota percentages (Private: ank.pcm@gmail.com)',
+    onclick: (e) => {
+      e.stopPropagation();
+      usageOpen = !usageOpen;
+      renderUsageWidget();
+    }
+  },
+    h('span', { class: 'usage-dot ' + dotClass }),
+    h('span', { class: 'usage-pill-txt' },
+      h('span', { text: '⚡ Usage: ' }),
+      h('span', { class: 'usage-tag gold', text: consumed + '% consumed' }),
+      h('span', { class: 'usage-tag green', text: 'Min: ' + leftMin + '% left' }),
+      h('span', { class: 'usage-tag blue', text: 'Hr: ' + leftHr + '% left' }),
+      h('span', { class: 'usage-tag gold', text: 'Day: ' + leftDay + '% left' })
+    ),
+    h('span', { class: 'usage-chev', text: '▼' })
+  );
+
+  host.append(btn);
+
+  if (usageOpen) {
+    const pop = h('div', {
+      class: 'usage-popover',
+      role: 'dialog',
+      'aria-label': 'Token Usage & Quotas',
+      onclick: (e) => e.stopPropagation()
+    },
+      h('div', { class: 'usage-pop-head' },
+        h('div', null,
+          h('h4', { class: 'usage-pop-title' }, '⚡ AI Studio Token Usage'),
+          h('p', { class: 'usage-pop-sub' }, 'Local & persistent status · Gemini 3.8 Flash')
+        ),
+        h('div', { style: 'display:flex;align-items:center;gap:6px' },
+          h('span', { class: 'usage-priv-badge', title: 'Local to this preview/dashboard only, excluded from GitHub repository' }, '🔒 Private'),
+          h('button', {
+            type: 'button',
+            class: 'usage-close-btn',
+            'aria-label': 'Close',
+            onclick: () => { usageOpen = false; renderUsageWidget(); }
+          }, '✕')
+        )
+      ),
+
+      h('div', { class: 'usage-summary-banner' },
+        h('div', null,
+          h('span', { style: 'color:#94a3b8;font-size:11px;display:block', text: 'TODAY CONSUMPTION' }),
+          h('b', { style: 'color:#f87171;font-size:15px', text: consumed + '% consumed' })
+        ),
+        h('div', { style: 'text-align:right' },
+          h('span', { style: 'color:#94a3b8;font-size:11px;display:block', text: 'DAILY REMAINING' }),
+          h('b', { class: 'usage-summary-pct', text: leftDay + '% left' })
+        )
+      ),
+
+      h('div', { class: 'usage-cards-grid' },
+        // Minute
+        h('div', { class: 'usage-card' },
+          h('div', { class: 'usage-card-top' },
+            h('span', { class: 'usage-card-lbl' }, '⚡ Tokens Left in Minute (TPM)'),
+            h('span', { class: 'usage-card-pct green' }, leftMin + '%')
+          ),
+          h('div', { class: 'usage-track' },
+            h('div', { class: 'usage-bar green', style: 'width:' + Math.min(100, Math.max(0, leftMin)) + '%' })
+          ),
+          h('div', { class: 'usage-card-bot' },
+            h('span', { text: fmtTokens(usageState.minute.remaining) + ' / ' + fmtTokens(usageState.minute.limit) + ' left' }),
+            h('span', { class: 'usage-timer', text: '⏱️ resets in ' + fmtSec(usageState.minute.resetSeconds) })
+          )
+        ),
+
+        // Hour
+        h('div', { class: 'usage-card' },
+          h('div', { class: 'usage-card-top' },
+            h('span', { class: 'usage-card-lbl' }, '⏳ Tokens Left in Hour (TPH)'),
+            h('span', { class: 'usage-card-pct blue' }, leftHr + '%')
+          ),
+          h('div', { class: 'usage-track' },
+            h('div', { class: 'usage-bar blue', style: 'width:' + Math.min(100, Math.max(0, leftHr)) + '%' })
+          ),
+          h('div', { class: 'usage-card-bot' },
+            h('span', { text: fmtTokens(usageState.hour.remaining) + ' / ' + fmtTokens(usageState.hour.limit) + ' left' }),
+            h('span', { class: 'usage-timer', text: '⏱️ resets in ' + fmtSec(usageState.hour.resetSeconds) })
+          )
+        ),
+
+        // Day
+        h('div', { class: 'usage-card' },
+          h('div', { class: 'usage-card-top' },
+            h('span', { class: 'usage-card-lbl' }, '📅 Tokens Left in Day (TPD)'),
+            h('span', { class: 'usage-card-pct gold' }, leftDay + '%')
+          ),
+          h('div', { class: 'usage-track' },
+            h('div', { class: 'usage-bar gold', style: 'width:' + Math.min(100, Math.max(0, leftDay)) + '%' })
+          ),
+          h('div', { class: 'usage-card-bot' },
+            h('span', { text: fmtTokens(usageState.day.remaining) + ' / ' + fmtTokens(usageState.day.limit) + ' left' }),
+            h('span', { class: 'usage-timer', text: '⏱️ resets in ' + fmtSec(usageState.day.resetSeconds) })
+          )
+        )
+      ),
+
+      h('div', { style: 'display:flex;flex-direction:column;gap:8px;background:rgba(255,255,255,0.04);padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)' },
+        h('div', { style: 'display:flex;justify-content:space-between;align-items:center' },
+          h('span', { style: 'font-size:11.5px;color:#cbd5e1;font-weight:600', text: 'Quick Set Consumed %:' }),
+          h('div', { class: 'usage-calib-row', style: 'display:flex;gap:4px;' },
+            [0, 10, 25, 35, 50, 75, 90].map(pct => h('button', {
+              type: 'button',
+              class: 'usage-calib-btn',
+              text: pct + '%',
+              onclick: async () => {
+                try {
+                  const res = await fetch('/api/usage/calibrate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ consumedPercentage: pct })
+                  });
+                  if (res.ok) {
+                    await fetchUsageData();
+                    renderUsageWidget();
+                    if (typeof toast === 'function') toast('✅ Credits updated: ' + pct + '% consumed');
+                  }
+                } catch (e) {}
+              }
+            }))
+          )
+        ),
+        h('div', { style: 'display:flex;align-items:center;gap:6px;' },
+          h('input', {
+            type: 'number',
+            id: 'customUsagePct',
+            min: 0,
+            max: 100,
+            step: 0.5,
+            placeholder: 'Custom %',
+            value: consumed,
+            style: 'flex:1;min-height:30px;height:30px;padding:3px 8px;font-size:12px;background:rgba(0,0,0,0.3);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:6px;'
+          }),
+          h('button', {
+            type: 'button',
+            class: 'btn sm',
+            style: 'min-height:30px;height:30px;padding:2px 10px;font-size:11.5px;background:#0e6b84;color:#fff;border:none;border-radius:6px;cursor:pointer;',
+            text: 'Save %',
+            onclick: async () => {
+              const inp = document.getElementById('customUsagePct');
+              if (!inp) return;
+              const val = parseFloat(inp.value);
+              if (isNaN(val) || val < 0 || val > 100) return;
+              try {
+                const res = await fetch('/api/usage/calibrate', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ consumedPercentage: val })
+                });
+                if (res.ok) {
+                  await fetchUsageData();
+                  renderUsageWidget();
+                  if (typeof toast === 'function') toast('✅ Consumption set to ' + val + '%');
+                }
+              } catch (e) {}
+            }
+          })
+        )
+      ),
+
+      h('div', { class: 'usage-pop-foot' },
+        h('span', { style: 'font-size:10px;color:#64748b', text: 'Owner: ank.pcm@gmail.com' }),
+        h('button', {
+          type: 'button',
+          class: 'usage-sync-btn',
+          onclick: async (e) => {
+            const b = e.currentTarget;
+            b.textContent = 'Syncing…';
+            await fetchUsageData();
+            renderUsageWidget();
+            if (typeof toast === 'function') toast('Usage status synced with server');
+          }
+        }, '🔄 Sync Now')
+      )
+    );
+
+    host.append(pop);
+  }
+}
+
+async function initUsageWidget() {
+  await fetchUsageData();
+  renderUsageWidget();
+
+  document.addEventListener('click', (e) => {
+    if (usageOpen && !e.target.closest('#usageWidgetContainer')) {
+      usageOpen = false;
+      renderUsageWidget();
+    }
+  });
+
+  if (usageTimerInterval) clearInterval(usageTimerInterval);
+  usageTimerInterval = setInterval(() => {
+    if (!usageState) return;
+    let changed = false;
+
+    if (usageState.minute && usageState.minute.resetSeconds > 0) {
+      usageState.minute.resetSeconds--;
+      if (usageState.minute.resetSeconds === 0) changed = true;
+    }
+    if (usageState.hour && usageState.hour.resetSeconds > 0) {
+      usageState.hour.resetSeconds--;
+      if (usageState.hour.resetSeconds === 0) changed = true;
+    }
+    if (usageState.day && usageState.day.resetSeconds > 0) {
+      usageState.day.resetSeconds--;
+      if (usageState.day.resetSeconds === 0) changed = true;
+    }
+
+    if (changed) {
+      fetchUsageData().then(renderUsageWidget);
+    } else if (usageOpen) {
+      renderUsageWidget();
+    }
+  }, 1000);
+
+  setInterval(async () => {
+    await fetchUsageData();
+    renderUsageWidget();
+  }, 20000);
+}
+
 /* ---------- boot ---------- */
 function buildShell() {
   const root = $('#app');
@@ -1602,8 +1922,11 @@ function buildShell() {
   root.append(
     h('div', { class: 'shell' },
       h('header', { class: 'topbar' },
-        h('div', { class: 'tb-head' }, h('h1', { class: 'tb-title', text: 'Avanti Fellows Math Teacher Dashboard' }), h('span', { class: 'tb-sub', text: 'JEE Mathematics \u00b7 Question Bank, DPPs, PYQs, Handouts, Must Solve & Syllabus Priority' })),
-        h('nav', { class: 'tb-menu' }, tb('qb', 'Question Bank', true), tb('lib', 'DPPs'), tb('pyq', 'PYQs'), tb('ho', 'Handouts'), tb('must', 'Must Solve'), tb('syl', 'Syllabus Priority'))),
+        h('div', { class: 'tb-head-row' },
+          h('div', { class: 'tb-head' }, h('h1', { class: 'tb-title', text: 'Avanti Fellows Math Teacher Dashboard' }), h('span', { class: 'tb-sub', text: 'JEE Mathematics \u00b7 Question Bank, DPPs, PYQs, Handouts, Must Solve & Syllabus Priority' })),
+          h('div', { id: 'usageWidgetContainer', class: 'tb-usage-host' })
+        ),
+        h('nav', { class: 'tb-menu' }, tb('qb', 'Question Bank', true), tb('lib', 'DPPs'), tb('pyq', 'PYQs'), tb('ho', 'Handouts'), tb('must', 'Must Solve'), tb('syl', 'Syllabus Priority'), tb('teacher', 'Teacher Login'), tb('student', 'Student Login'))),
       h('main', { class: 'main' },
         h('div', { id: 'viewQb', class: 'qbhost' }),
         h('div', { id: 'viewLib', class: 'make', hidden: true }, h('p', { class: 'hint', text: 'Loading\u2026' })),
@@ -1612,7 +1935,9 @@ function buildShell() {
         h('div', { id: 'viewSw', class: 'make', hidden: true }, h('p', { class: 'hint', text: 'Loading\u2026' })),
         h('div', { id: 'viewHo', class: 'hoview', hidden: true }, h('p', { class: 'hint', text: 'Loading\u2026' })),
         h('div', { id: 'viewMust', class: 'make', hidden: true }, h('p', { class: 'hint', text: 'Loading\u2026' })),
-        h('div', { id: 'viewSyl', class: 'sy-wrap', hidden: true }))));
+        h('div', { id: 'viewSyl', class: 'sy-wrap', hidden: true }),
+        h('div', { id: 'viewTeacher', class: 'portal-view', hidden: true }),
+        h('div', { id: 'viewStudent', class: 'portal-view', hidden: true }))));
 }
 function buildLib() {
   return h('div', { id: 'viewLib', class: 'make' },
@@ -1760,6 +2085,7 @@ function ensureDpp() {
 }
 function boot() {
   buildShell();
+  initUsageWidget();
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMax(); }); document.addEventListener('click', onAct); document.addEventListener('change', onAct);
   window.addEventListener('resize', rescale);
   try { if (window.claude && window.claude.use) window.claude.use('downloads').then(d => { if (d) downloads = d; }).catch(() => {}); } catch (e) { /* no runtime */ }
@@ -1780,5 +2106,50 @@ async function qbInit() {
     await window.__qbStart();
   } catch (e) { qbLoaded = false; host.textContent = 'The question bank did not load. Refresh the page.'; }
 }
+
+function getShiftPapers() {
+  if (!BANK || !BANK.qs) return [];
+  const pyqs = BANK.qs.filter(q => q.s === 'P' && q.p && !/^PYQARC/.test(q.i) && !/shift not given|Year not printed/i.test(q.p));
+  const by = {};
+  pyqs.forEach(q => {
+    const isAdv = q.e === 'Adv';
+    const isKcet = q.e === 'KCET';
+    const examName = isAdv ? 'JEE Advanced' : isKcet ? 'KCET' : 'JEE Main';
+    const k = (q.e || 'Main') + '|' + (q.y || '') + '|' + q.p;
+    if (!by[k]) {
+      const pLabel = isAdv && q.y >= 2013 ? `${examName} ${q.y} · ${q.p}` : `${examName} ${q.y} · ${q.p.replace(/\s+Shift/, ' · Shift')}`;
+      by[k] = {
+        key: k,
+        label: pLabel,
+        exam: examName,
+        bucket: q.e || 'Main',
+        year: q.y || 0,
+        paper: q.p,
+        qs: []
+      };
+    }
+    by[k].qs.push(q);
+  });
+  return Object.values(by).sort((a, b) => {
+    if (b.year !== a.year) return b.year - a.year;
+    return a.label.localeCompare(b.label);
+  });
+}
+
 window.AvantiTeacher = { start: o => { OPTS = o; boot(); } };
+window.QB_EXPORT = {
+  doExport,
+  testPages,
+  sheetParams,
+  buildEditable,
+  layoutSheet,
+  keySheets,
+  shotPageBytes,
+  ensureDpp,
+  getShiftPapers,
+  BANK: () => BANK,
+  BYID: () => BYID,
+  CHMAP: () => CHMAP,
+  PYQT: () => PYQT
+};
 })();

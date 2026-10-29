@@ -582,3 +582,70 @@ body.hasmax{overflow:hidden}
 .sheet math{font-size:1.04em;line-height:1.25}
 .sheet math[display="block"],.sheet .katex-display{display:block;margin:4px 0;text-align:center}
 
+/* ---------- Persistent Usage Status Widget (Admin/Owner Only) ---------- */
+.tb-head-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:relative}
+.tb-usage-host{position:relative;display:inline-flex;align-items:center}
+.usage-widget-btn{display:inline-flex;align-items:center;gap:10px;padding:7px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,214,102,0.3);border-radius:30px;color:#f8fafc;font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s ease;backdrop-filter:blur(10px);box-shadow:0 4px 14px rgba(0,0,0,0.25)}
+.usage-widget-btn:hover{background:rgba(255,255,255,0.14);border-color:#ffd873;box-shadow:0 6px 18px rgba(245,184,61,0.25);transform:translateY(-1px)}
+.usage-widget-btn:active{transform:translateY(0)}
+.usage-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0;box-shadow:0 0 8px currentColor}
+.usage-dot.green{background:#10b981;color:#10b981}
+.usage-dot.amber{background:#f59e0b;color:#f59e0b}
+.usage-dot.red{background:#ef4444;color:#ef4444}
+.usage-pill-txt{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;letter-spacing:0.2px}
+.usage-tag{background:rgba(255,255,255,0.12);padding:2px 7px;border-radius:12px;font-size:11.5px;font-weight:700}
+.usage-tag.gold{background:rgba(245,184,61,0.25);color:#ffd873;border:1px solid rgba(245,184,61,0.4)}
+.usage-tag.green{background:rgba(16,185,129,0.2);color:#34d399}
+.usage-tag.blue{background:rgba(59,130,246,0.2);color:#93c5fd}
+.usage-chev{font-size:10px;opacity:0.75;margin-left:2px;transition:transform .15s ease}
+.usage-widget-btn[aria-expanded="true"] .usage-chev{transform:rotate(180deg)}
+
+/* Popover details panel */
+.usage-popover{position:absolute;top:calc(100% + 10px);right:0;width:370px;max-width:calc(100vw - 28px);background:linear-gradient(170deg,#0d1a36 0%,#13254e 100%);border:1px solid rgba(245,184,61,0.35);border-radius:16px;box-shadow:0 18px 45px rgba(0,0,0,0.55),0 0 1px rgba(255,255,255,0.3) inset;padding:18px;color:#f8fafc;z-index:999;animation:usageFadeIn .16s ease-out;display:flex;flex-direction:column;gap:14px}
+@keyframes usageFadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.usage-pop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:12px}
+.usage-pop-title{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px;margin:0}
+.usage-pop-sub{font-size:11.5px;color:#94a3b8;margin:2px 0 0}
+.usage-priv-badge{font-size:10.5px;font-weight:700;padding:2px 6px;border-radius:6px;background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.35);display:inline-flex;align-items:center;gap:3px}
+.usage-close-btn{background:transparent;border:0;color:#94a3b8;font-size:16px;cursor:pointer;padding:2px 6px;border-radius:6px;line-height:1}
+.usage-close-btn:hover{color:#fff;background:rgba(255,255,255,0.1)}
+
+.usage-cards-grid{display:flex;flex-direction:column;gap:10px}
+.usage-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.usage-card-top{display:flex;align-items:baseline;justify-content:space-between}
+.usage-card-lbl{font-size:12px;font-weight:600;color:#cbd5e1;display:flex;align-items:center;gap:5px}
+.usage-card-pct{font-size:18px;font-weight:800;letter-spacing:-0.3px}
+.usage-card-pct.green{color:#34d399}
+.usage-card-pct.blue{color:#60a5fa}
+.usage-card-pct.gold{color:#ffd873}
+.usage-card-pct.red{color:#f87171}
+
+.usage-track{width:100%;height:8px;background:rgba(255,255,255,0.1);border-radius:6px;overflow:hidden;position:relative}
+.usage-bar{height:100%;border-radius:6px;transition:width .4s ease}
+.usage-bar.green{background:linear-gradient(90deg,#059669,#10b981)}
+.usage-bar.blue{background:linear-gradient(90deg,#2563eb,#38bdf8)}
+.usage-bar.gold{background:linear-gradient(90deg,#d97706,#fbbf24)}
+
+.usage-card-bot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#94a3b8}
+.usage-timer{color:#ffd873;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+
+.usage-summary-banner{background:rgba(245,184,61,0.12);border:1px solid rgba(245,184,61,0.25);border-radius:10px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#f8fafc}
+.usage-summary-pct{font-size:14px;font-weight:800;color:#ffd873}
+
+.usage-pop-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:11px;color:#94a3b8}
+.usage-sync-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:8px;color:#fff;padding:5px 10px;font-size:11.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s ease}
+.usage-sync-btn:hover{background:rgba(255,255,255,0.2);border-color:#ffd873}
+.usage-sync-btn:active{transform:scale(0.97)}
+
+.usage-calib-row{display:flex;align-items:center;gap:6px;font-size:11px}
+.usage-calib-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#cbd5e1;padding:3px 7px;font-size:10.5px;cursor:pointer}
+.usage-calib-btn:hover{background:rgba(255,255,255,0.15);color:#fff}
+
+/* Strict horizontal layout for math formulas without vertical stacking */
+math, math * { white-space: nowrap !important; word-break: normal !important; overflow-wrap: normal !important; }
+math { display: inline !important; vertical-align: baseline !important; }
+math[display="block"], math.tml-display { display: block !important; white-space: normal !important; margin: 0.8em auto; }
+.mx { display: inline-block !important; white-space: nowrap !important; vertical-align: -0.15em; margin: 0 0.22em !important; padding: 0 1px; }
+.mx math { display: inline !important; white-space: nowrap !important; }
+.qcard .stem, .choice .ot { line-height: 1.85 !important; overflow-wrap: break-word !important; }
+

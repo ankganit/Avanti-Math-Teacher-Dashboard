@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>11M11 Conic Sections Handout</title>
+<link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+<style>
+@font-face{font-family:'Kalam';font-weight:400;src:url(node_modules/@fontsource/kalam/files/kalam-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:'Kalam';font-weight:700;src:url(node_modules/@fontsource/kalam/files/kalam-latin-700-normal.woff2) format('woff2');}
+@font-face{font-family:'Caveat';font-weight:700;src:url(node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2) format('woff2');}
+@page{size:210mm 297mm;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:'Kalam',cursive;font-size:18px;line-height:30px;color:#16181d}
+.page{width:794px;height:1120px;position:relative;overflow:hidden;page-break-after:always;
+ background:
+  linear-gradient(#e0555d,#e0555d) 60px 0/2px 100% no-repeat,
+  linear-gradient(#e0555d,#e0555d) 65px 0/1px 100% no-repeat,
+  linear-gradient(#e0555d,#e0555d) 772px 0/1px 100% no-repeat,
+  #fff;}
+.inner{position:absolute;left:84px;right:30px;top:20px;height:1030px;display:flex;flex-direction:column;justify-content:space-between}
+.sec{position:relative}
+.pno{position:absolute;right:6px;bottom:-32px;font-family:'Caveat';font-weight:700;font-size:20px;line-height:20px;color:#444}
+.r{color:#d4202c}.b{color:#1d3fae}.g{color:#0a6428}.k{color:#16181d}
+.title{text-align:center;font-weight:700;font-size:29px;letter-spacing:1px;line-height:40px;color:#d4202c}
+.title .code{font-size:23px;color:#1d3fae;margin-right:50px;letter-spacing:0}
+.h{font-weight:700;font-size:21px;color:#d4202c;line-height:36px;margin-bottom:2px}
+.fr{line-height:42px}
+.hash{display:inline-block;margin-right:6px}
+.ul,.box,.circ{position:relative;display:inline-block}
+.box,.circ{text-indent:0}
+.box{padding:0 8px;margin:2px 0}.circ{margin:4px 10px}
+.blk{display:block}
+.box.blk{margin:3px 0}
+.it{padding-left:32px;text-indent:-32px}
+.it2{padding-left:18px;text-indent:-18px}
+.note{font-family:'Caveat';font-weight:700;font-size:22px;line-height:24px;color:#0a6428}
+.small{font-size:16px;line-height:25px}
+.cols{display:grid;grid-template-columns:1fr 1fr;column-gap:22px}
+svg.ov{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+svg.st{width:20px;height:20px;vertical-align:-3px;margin-right:3px;overflow:visible}
+svg.st path{fill:none;stroke:#d4202c;stroke-width:1.8;stroke-linejoin:round}
+.katex{font-size:1.03em}
+.katex-display{margin:2px 0 !important;text-align:left}
+.katex-display>.katex{text-align:left}
+table.m{border-collapse:collapse;font-size:17px;line-height:25px;width:100%}
+table.m td{padding:3px 6px;vertical-align:top}
+.strip-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px}
+.strip-box{border:1.5px dashed #1d3fae;border-radius:6px;padding:5px 8px;background:#fbfdff}
+.q-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.q-text{flex:1;font-size:16.5px;line-height:24px}
+.q-ans{flex:none;font-size:15.5px;font-weight:700;white-space:nowrap}
+.hint-it{font-size:15.5px;line-height:22px;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: INTRO & GENERAL CONIC -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="title"><span class="code">11M11</span><span class="ul">CONIC SECTIONS</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">General Definition of a Conic</span></div>
+      <div class="k">Locus of point $P(x,y)$ whose distance from a fixed point $S$ (Focus) bears a constant ratio $e$ (Eccentricity) to its perpendicular distance from a fixed line $L$ (Directrix).</div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$\dfrac{SP}{PM} = e \iff SP^2 = e^2 PM^2$</span></div>
+      <div class="it2 g"><span class="note">Yaad rakho: Agar Focus directrix par lie kare, toh conic Degenerate ho jata hai (Pair of straight lines)!</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">General 2nd Degree Equation & Nature of Conic</span></div>
+      <div class="k">General curve: $ax^2 + 2hxy + by^2 + 2gx + 2fy + c = 0$. Discriminant $\Delta$:</div>
+      <div class="b"><i class="s1"></i> $\Delta = abc + 2fgh - af^2 - bg^2 - ch^2 = \begin{vmatrix} a & h & g \\ h & b & f \\ g & f & c \end{vmatrix}$</div>
+      <div style="margin-top:4px">
+        <table class="m">
+          <tr style="font-weight:700" class="r"><td>Condition</td><td>Nature of Curve</td><td>Eccentricity ($e$)</td></tr>
+          <tr><td class="b">$\Delta = 0, h^2 - ab > 0$</td><td>Pair of intersecting lines</td><td>—</td></tr>
+          <tr><td class="b">$\Delta = 0, h^2 - ab = 0$</td><td>Pair of parallel lines</td><td>—</td></tr>
+          <tr><td class="b">$\Delta \neq 0, a = b, h = 0$</td><td class="g">Circle</td><td>$e = 0$</td></tr>
+          <tr><td class="b">$\Delta \neq 0, h^2 = ab$</td><td class="r">Parabola</td><td>$e = 1$</td></tr>
+          <tr><td class="b">$\Delta \neq 0, h^2 < ab$</td><td class="g">Ellipse</td><td>$0 < e < 1$</td></tr>
+          <tr><td class="b">$\Delta \neq 0, h^2 > ab$</td><td class="r">Hyperbola</td><td>$e > 1$</td></tr>
+          <tr><td class="b">$\Delta \neq 0, h^2 > ab, a+b=0$</td><td class="b">Rectangular Hyperbola</td><td>$e = \sqrt{2}$</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.1</u> : <span class="k" style="font-weight:400">Classify $x^2 + 4xy + 4y^2 - 6x - 12y + 5 = 0$.</span></div>
+      <div class="b">Here $a=1, h=2, b=4 \implies h^2 - ab = 4 - 4 = 0$. Now check $\Delta$:</div>
+      <div class="g">$\Delta = (1)(4)(5) + 2(-6)(-3)(2) - 1(36) - 4(9) - 5(4) = 20 + 72 - 36 - 36 - 20 = 0$.</div>
+      <div class="it2 r">Since $\Delta = 0$ and $h^2 = ab$, it represents <span class="circ" style="--bc:#d4202c">Parallel lines</span> $(x + 2y - 1)(x + 2y - 5) = 0$.</div>
+    </div>
+    <div class="pno">1</div>
+  </div>
+</section>
+
+<!-- PAGE 2: PARABOLA STANDARD FORMS & TERMS -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Parabola: Standard Forms & Terminology</span></div>
+      <div class="k">Equation: $y^2 = 4ax$ ($a > 0$). Standard parameters and comparison:</div>
+      <div style="margin-top:4px">
+        <table class="m">
+          <tr style="font-weight:700" class="r"><td>Feature</td><td>$y^2 = 4ax$</td><td>$x^2 = 4ay$</td></tr>
+          <tr><td class="b">Vertex $(V)$</td><td>$(0, 0)$</td><td>$(0, 0)$</td></tr>
+          <tr><td class="b">Focus $(S)$</td><td>$(a, 0)$</td><td>$(0, a)$</td></tr>
+          <tr><td class="b">Directrix</td><td>$x = -a \iff x + a = 0$</td><td>$y = -a \iff y + a = 0$</td></tr>
+          <tr><td class="b">Axis of Symmetry</td><td>$y = 0$ ($X$-axis)</td><td>$x = 0$ ($Y$-axis)</td></tr>
+          <tr><td class="b">Tangent at Vertex</td><td>$x = 0$ ($Y$-axis)</td><td>$y = 0$ ($X$-axis)</td></tr>
+          <tr><td class="b">Latus Rectum ($LR$)</td><td>Length $= 4a$, ends $(a, \pm 2a)$</td><td>Length $= 4a$, ends $(\pm 2a, a)$</td></tr>
+          <tr><td class="b">Focal Distance of $P(x_1, y_1)$</td><td>$SP = x_1 + a$</td><td>$SP = y_1 + a$</td></tr>
+        </table>
+      </div>
+      <div class="it2 g" style="margin-top:4px"><span class="note">Dhyan rakho: Agar parabola $(y-k)^2 = 4a(x-h)$ ho toh vertex $(h, k)$ shift ho jata hai!</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Parametric Coordinates of Parabola</span></div>
+      <div class="k">Any point on $y^2 = 4ax$ can be represented in terms of single parameter $t$:</div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#1d3fae;text-align:center">$P(t) \equiv (at^2, 2at), \quad t \in \mathbb{R}$</span></div>
+      <div class="it2 g"><span class="note">Here $t = \dfrac{1}{m}$, where $m$ is the slope of tangent at $P$! Slope of tangent is $\dfrac{1}{t}$.</span></div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.2</u> : <span class="k" style="font-weight:400">Find vertex, focus, and directrix of $y^2 - 4y - 8x + 12 = 0$.</span></div>
+      <div class="b">Completing square: $(y - 2)^2 = 8x - 8 = 8(x - 1) = 4(2)(x - 1) \implies a = 2$.</div>
+      <div class="it">Vertex: $(h, k) =$ <span class="circ" style="--bc:#1d3fae">$(1, 2)$</span>. Focus: $(h+a, k) = (1+2, 2) =$ <span class="circ" style="--bc:#d4202c">$(3, 2)$</span>.</div>
+      <div class="it">Directrix: $x - h = -a \implies x - 1 = -2 \implies$ <span class="box" style="--bc:#0a6428">$x + 1 = 0$</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Tip</u> : <span class="k" style="font-weight:400">Length of focal distance of $(at^2, 2at)$ is $SP = a(1 + t^2)$.</span></div>
+      <div class="b">Distance between focus $(a, 0)$ and point $(at^2, 2at)$ is $\sqrt{(at^2 - a)^2 + (2at)^2} = a(t^2 + 1)$.</div>
+    </div>
+    <div class="pno">2</div>
+  </div>
+</section>
+
+<!-- PAGE 3: FOCAL CHORD PROPERTIES & POSITION OF POINT -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Properties of Focal Chord ($y^2 = 4ax$)</span></div>
+      <div class="k">Chord passing through Focus $S(a, 0)$ with extremities $P(t_1)$ and $Q(t_2)$:</div>
+      <div class="it b"><i class="s2"></i> Endpoints condition: <span class="box" style="--bc:#d4202c">$t_1 t_2 = -1$</span> $\implies$ If one end is $t$, other end is <span class="box" style="--bc:#1d3fae">$-1/t$</span>.</div>
+      <div class="it b"><i class="s2"></i> Length of Focal Chord: <span class="box blk" style="--bc:#d4202c;text-align:center">$L = a\left(t + \dfrac{1}{t}\right)^2 = 4a\csc^2\theta$</span></div>
+      <div class="it2 g"><span class="note">where $\theta$ is inclination of chord with axis. Minimum length is $4a$ (Latus Rectum at $\theta = 90^\circ$).</span></div>
+      <div class="it b"><i class="s1"></i> Semi-latus rectum is Harmonic Mean of focal segments:</div>
+      <div class="fr g" style="text-align:center">$\dfrac{1}{SP} + \dfrac{1}{SQ} = \dfrac{1}{a} = \dfrac{2}{2a}$ <span class="note">(Super repeated in JEE Main!)</span></div>
+      <div class="it b"><i class="s1"></i> Circle on any focal chord as diameter <span class="r">touches the directrix</span>. Circle on focal distance $SP$ as diameter touches the tangent at vertex.</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Position of Point with Respect to Parabola</span></div>
+      <div class="k">Let $S(x, y) = y^2 - 4ax$. For point $P(x_1, y_1)$, calculate $S_1 = y_1^2 - 4ax_1$:</div>
+      <div class="it"><span class="b">$S_1 > 0$</span> $\implies$ Point lies <span class="r">Outside</span> the parabola (2 real tangents possible).</div>
+      <div class="it"><span class="b">$S_1 = 0$</span> $\implies$ Point lies <span class="g">On</span> the parabola (1 tangent).</div>
+      <div class="it"><span class="b">$S_1 < 0$</span> $\implies$ Point lies <span class="b">Inside</span> the parabola (No real tangent).</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.3</u> : <span class="k" style="font-weight:400">If one end of a focal chord of $y^2 = 8x$ is $(2, 4)$, find length of the chord.</span></div>
+      <div class="b">Here $4a = 8 \implies a = 2$. Point $(2, 4) \implies 2at = 4 \implies 2(2)t = 4 \implies t = 1$.</div>
+      <div class="g">Other end has parameter $t_2 = -1/t = -1$.</div>
+      <div class="it r">Length $= a(t + 1/t)^2 = 2(1 + 1)^2 = 2(4) =$ <span class="circ" style="--bc:#d4202c">$8$</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.3b</u> : <span class="k" style="font-weight:400">If $SP = 6$ for $y^2 = 12x$, find $SQ$ for focal chord $PQ$.</span></div>
+      <div class="b">Here $4a = 12 \implies a = 3$. Harmonic mean relation: $\dfrac{1}{SP} + \dfrac{1}{SQ} = \dfrac{1}{a} = \dfrac{1}{3}$.</div>
+      <div class="it r">$\dfrac{1}{SQ} = \dfrac{1}{3} - \dfrac{1}{6} = \dfrac{1}{6} \implies SQ =$ <span class="circ" style="--bc:#1d3fae">$6$</span>. (Here $P, Q$ are ends of $LR$!).</div>
+    </div>
+    <div class="pno">3</div>
+  </div>
+</section>
+
+<!-- PAGE 4: TANGENTS TO PARABOLA & DIRECTOR CIRCLE -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Equations of Tangents to Parabola ($y^2 = 4ax$)</span></div>
+      <div class="it2 r" style="font-weight:700">1. Slope Form: <span class="k" style="font-weight:400">Line $y = mx + c$ is tangent to $y^2 = 4ax$ iff</span> <span class="box" style="--bc:#d4202c">$c = \dfrac{a}{m}$</span></div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$y = mx + \dfrac{a}{m} \quad (m \neq 0)$</span> with point of contact <span class="box" style="--bc:#1d3fae">$\left(\dfrac{a}{m^2}, \dfrac{2a}{m}\right)$</span></div>
+      <div class="it2 r" style="font-weight:700">2. Parametric Form ($t$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#1d3fae">$ty = x + at^2$</span></span> <span class="note">(Slope is $1/t$)</span></div>
+      <div class="it2 r" style="font-weight:700">3. Point Form ($x_1, y_1$): <span class="b">$T = 0 \implies$ <span class="box" style="--bc:#0a6428">$y y_1 = 2a(x + x_1)$</span></span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Point of Intersection of Tangents at $P(t_1)$ and $Q(t_2)$</span></div>
+      <div class="b">Solving $t_1 y = x + at_1^2$ and $t_2 y = x + at_2^2$:</div>
+      <div class="fr r" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$T(h, k) = \Big(a t_1 t_2, \; a(t_1 + t_2)\Big)$</span></div>
+      <div class="it2 g"><span class="note">$x$-coord is G.M. of abscissae; $y$-coord is A.M. of ordinates of $P$ and $Q$!</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Director Circle of Parabola</span></div>
+      <div class="k">Locus of point of intersection of two mutually perpendicular tangents ($m_1 m_2 = -1$).</div>
+      <div class="b">From $T(at_1 t_2, a(t_1+t_2))$, perpendicular tangents $\implies t_1 t_2 = -1 \implies x = a(-1) = -a$.</div>
+      <div class="it r"><i class="s2"></i> Director circle of a parabola is its <span class="box" style="--bc:#d4202c">Directrix: $x + a = 0$</span>!</div>
+      <div class="it2 g"><span class="note">Yaad rakho: Parabola ka director circle circle nahi hota, ek straight line (directrix) hoti hai!</span></div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.4</u> : <span class="k" style="font-weight:400">Find common tangent to $y^2 = 4x$ and $x^2 = -32y$.</span></div>
+      <div class="b">Tangent to $y^2 = 4x$ ($a=1$): $y = mx + 1/m$. Substitute into $x^2 = -32y$:</div>
+      <div class="g">$x^2 + 32mx + 32/m = 0$. For tangency: $D = 0 \implies (32m)^2 - 4(32/m) = 0 \implies m^3 = 1/8 \implies m = 1/2$.</div>
+      <div class="it r">Tangent: $y = \dfrac{1}{2}x + 2 \implies$ <span class="circ" style="--bc:#d4202c">$x - 2y + 4 = 0$</span>.</div>
+    </div>
+    <div class="pno">4</div>
+  </div>
+</section>
+
+<!-- PAGE 5: NORMALS TO PARABOLA & CO-NORMAL POINTS -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Equations of Normals to Parabola ($y^2 = 4ax$)</span></div>
+      <div class="it2 r" style="font-weight:700">1. Parametric Form ($t$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#d4202c">$y + tx = 2at + at^3$</span></span> <span class="note">(Slope is $m = -t$)</span></div>
+      <div class="it2 r" style="font-weight:700">2. Slope Form ($m$): <span class="k" style="font-weight:400">Put $t = -m$:</span></div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#1d3fae;text-align:center">$y = mx - 2am - am^3$</span> with foot of normal <span class="box" style="--bc:#d4202c">$(am^2, -2am)$</span></div>
+      <div class="it2 r" style="font-weight:700">3. Point Form ($x_1, y_1$): <span class="b">$y - y_1 = -\dfrac{y_1}{2a}(x - x_1)$</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Co-Normal Points (Three Normals from $(h, k)$)</span></div>
+      <div class="k">If normal passes through $(h, k)$: $k = mh - 2am - am^3 \implies$ <span class="b">$am^3 + (2a - h)m + k = 0$</span>.</div>
+      <div class="it b"><i class="s1"></i> Roots $m_1, m_2, m_3$ satisfy:</div>
+      <div class="it2 g">$\sum m_i = m_1 + m_2 + m_3 = 0$ <span class="note">(No $m^2$ term in cubic!)</span></div>
+      <div class="it2 g">$\sum m_1 m_2 = \dfrac{2a - h}{a}, \quad m_1 m_2 m_3 = -\dfrac{k}{a}$</div>
+      <div class="it r"><i class="s2"></i> Sum of ordinates of co-normal points: <span class="box" style="--bc:#d4202c">$\sum y_i = -2a\sum m_i = 0$</span></div>
+      <div class="it b"><i class="s1"></i> Centroid of $\triangle$ formed by co-normal points: <span class="box" style="--bc:#1d3fae">$G = \left(\dfrac{2h - 4a}{3}, \; 0\right)$</span> (Always on axis!)</div>
+      <div class="it b"><i class="s1"></i> Condition for three distinct real normals: <span class="box" style="--bc:#d4202c">$h > 2a$</span> and $27ak^2 < 4(h - 2a)^3$.</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Relation Between Parameters if Normal at $t_1$ meets at $t_2$</span></div>
+      <div class="k">If the normal at $P(t_1)$ intersects the parabola again at $Q(t_2)$:</div>
+      <div class="fr r" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$t_2 = -t_1 - \dfrac{2}{t_1}$</span></div>
+      <div class="it2 g"><span class="note">Minimum length of such a normal chord is $6\sqrt{3}a$ (at $t_1 = \sqrt{2}$).</span></div>
+    </div>
+    <div class="pno">5</div>
+  </div>
+</section>
+
+<!-- PAGE 6: CHORDS OF PARABOLA & GEOMETRIC PROPERTIES -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Chords of Parabola ($y^2 = 4ax$)</span></div>
+      <div class="it2 r" style="font-weight:700">1. Chord joining $P(t_1)$ and $Q(t_2)$:</div>
+      <div class="b"><i class="s1"></i> Slope $= \dfrac{2}{t_1 + t_2}$. Equation: <span class="box" style="--bc:#1d3fae">$2x - (t_1 + t_2)y + 2at_1 t_2 = 0$</span></div>
+      <div class="it2 r" style="font-weight:700">2. Chord of Contact ($T = 0$): <span class="k" style="font-weight:400">From external point $(x_1, y_1)$</span></div>
+      <div class="b"><i class="s2"></i> Equation: <span class="box" style="--bc:#d4202c">$y y_1 = 2a(x + x_1)$</span>. Area of $\triangle$ formed by tangents & chord: $\dfrac{(y_1^2 - 4ax_1)^{3/2}}{2a}$.</div>
+      <div class="it2 r" style="font-weight:700">3. Chord with Given Midpoint $(x_1, y_1)$: <span class="b"><i class="s2"></i> <span class="box" style="--bc:#0a6428">$T = S_1$</span></span></div>
+      <div class="b">$y y_1 - 2a(x + x_1) = y_1^2 - 4ax_1 \implies$ <span class="box" style="--bc:#1d3fae">$y y_1 - 2ax = y_1^2 - 2ax_1$</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Important Geometric & Reflection Properties</span></div>
+      <div class="it b"><i class="s1"></i> <span class="r">Reflection Property:</span> Any ray parallel to the axis of parabola, after reflection from the inside surface, passes through the <span class="r">Focus $S$</span>.</div>
+      <div class="it b"><i class="s1"></i> Tangent at any point $P$ bisects the angle between focal radius $SP$ and perpendicular from $P$ to directrix.</div>
+      <div class="it b"><i class="s1"></i> Portion of any tangent intercepted between point of contact and directrix subtends a <span class="r">right angle ($90^\circ$)</span> at the focus.</div>
+      <div class="it b"><i class="s1"></i> The locus of foot of perpendicular from focus upon any tangent is the <span class="box" style="--bc:#d4202c">Tangent at vertex ($x = 0$)</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.5</u> : <span class="k" style="font-weight:400">Find midpoint chord of $y^2 = 8x$ whose midpoint is $(3, 2)$.</span></div>
+      <div class="b">Here $a = 2$. Using $T = S_1$: $y(2) - 2(2)(x + 3) = (2)^2 - 8(3)$.</div>
+      <div class="g">$2y - 4x - 12 = 4 - 24 = -20 \implies 2y - 4x + 8 = 0 \implies$ <span class="circ" style="--bc:#d4202c">$2x - y - 4 = 0$</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Tip</u> : <span class="k" style="font-weight:400">Subtangent and Subnormal for $y^2 = 4ax$:</span></div>
+      <div class="b">Length of subtangent $= 2x_1$ (bisected at vertex). Length of subnormal $= 2a$ (constant for any point!).</div>
+    </div>
+    <div class="pno">6</div>
+  </div>
+</section>
+
+<!-- PAGE 7: ELLIPSE STANDARD EQUATION & PROPERTIES -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Ellipse: Standard Equations & Terminology</span></div>
+      <div class="k">Equation: $\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1$ ($0 < e < 1$). Two standard orientations:</div>
+      <div style="margin-top:4px">
+        <table class="m">
+          <tr style="font-weight:700" class="r"><td>Feature</td><td>Horizontal ($a > b$)</td><td>Vertical ($b > a$)</td></tr>
+          <tr><td class="b">Eccentricity ($e$)</td><td>$b^2 = a^2(1 - e^2) \implies e = \sqrt{1 - b^2/a^2}$</td><td>$a^2 = b^2(1 - e^2) \implies e = \sqrt{1 - a^2/b^2}$</td></tr>
+          <tr><td class="b">Foci ($S, S'$)</td><td>$(\pm ae, 0)$</td><td>$(0, \pm be)$</td></tr>
+          <tr><td class="b">Directrices</td><td>$x = \pm \dfrac{a}{e}$</td><td>$y = \pm \dfrac{b}{e}$</td></tr>
+          <tr><td class="b">Latus Rectum ($LR$)</td><td>$\dfrac{2b^2}{a}$</td><td>$\dfrac{2a^2}{b}$</td></tr>
+          <tr><td class="b">Major & Minor Axes</td><td>$2a$ ($X$-axis), $2b$ ($Y$-axis)</td><td>$2b$ ($Y$-axis), $2a$ ($X$-axis)</td></tr>
+          <tr><td class="b">Focal Distance Sum</td><td><span class="box" style="--bc:#d4202c">$SP + S'P = 2a$</span> (Const.)</td><td><span class="box" style="--bc:#d4202c">$SP + S'P = 2b$</span></td></tr>
+        </table>
+      </div>
+      <div class="it2 g" style="margin-top:4px"><span class="note">Dhyan rakho: $SP + S'P = 2a$ is mechanical definition used to draw ellipse using two pins and a loop of string!</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Auxiliary Circle & Parametric Representation</span></div>
+      <div class="k">Auxiliary circle: Circle described on major axis as diameter: <span class="box" style="--bc:#1d3fae">$x^2 + y^2 = a^2$</span>.</div>
+      <div class="b">Let $Q(a\cos\theta, a\sin\theta)$ be on auxiliary circle, then corresponding point $P$ on ellipse is:</div>
+      <div class="fr r" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$P(\theta) \equiv (a\cos\theta, \; b\sin\theta), \quad \theta \in [0, 2\pi)$</span></div>
+      <div class="it2 g"><span class="note">Angle $\theta$ is Eccentric Angle (NOT polar angle of $P$, it is the angle made by $OQ$ with $X$-axis!).</span></div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.6</u> : <span class="k" style="font-weight:400">Find eccentricity, foci, and latus rectum of $9x^2 + 16y^2 = 144$.</span></div>
+      <div class="b">Dividing by 144: $\dfrac{x^2}{16} + \dfrac{y^2}{9} = 1 \implies a^2 = 16, b^2 = 9 \implies a = 4, b = 3$ ($a > b$).</div>
+      <div class="it">$e = \sqrt{1 - 9/16} = \dfrac{\sqrt{7}}{4}$ $\implies$ Foci: $(\pm ae, 0) =$ <span class="circ" style="--bc:#d4202c">$(\pm \sqrt{7}, 0)$</span>.</div>
+      <div class="it">Length of $LR = \dfrac{2b^2}{a} = \dfrac{2(9)}{4} =$ <span class="box" style="--bc:#1d3fae">$\dfrac{9}{2}$</span>.</div>
+    </div>
+    <div class="pno">7</div>
+  </div>
+</section>
+
+<!-- PAGE 8: TANGENTS TO ELLIPSE & DIRECTOR CIRCLE -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Line and Ellipse: Condition of Tangency</span></div>
+      <div class="k">Line $y = mx + c$ is tangent to $\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1$ iff:</div>
+      <div class="fr r" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$c^2 = a^2 m^2 + b^2 \implies c = \pm \sqrt{a^2 m^2 + b^2}$</span></div>
+      <div class="it2 g"><span class="note">Point of contact: $\left(-\dfrac{a^2 m}{c}, \; \dfrac{b^2}{c}\right)$ where $c = \pm \sqrt{a^2 m^2 + b^2}$.</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Forms of Tangents to Ellipse</span></div>
+      <div class="it2 r" style="font-weight:700">1. Slope Form: <span class="b"><i class="s2"></i> <span class="box" style="--bc:#d4202c">$y = mx \pm \sqrt{a^2 m^2 + b^2}$</span></span></div>
+      <div class="it2 r" style="font-weight:700">2. Parametric Form ($	heta$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#1d3fae">$\dfrac{x\cos\theta}{a} + \dfrac{y\sin\theta}{b} = 1$</span></span></div>
+      <div class="it2 r" style="font-weight:700">3. Point Form ($x_1, y_1$): <span class="b">$T = 0 \implies$ <span class="box" style="--bc:#0a6428">$\dfrac{x x_1}{a^2} + \dfrac{y y_1}{b^2} = 1$</span></span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Director Circle of Ellipse</span></div>
+      <div class="k">Locus of point of intersection of two mutually perpendicular tangents to the ellipse:</div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$x^2 + y^2 = a^2 + b^2$</span></div>
+      <div class="it2 g"><span class="note">Concentric circle with center $(0,0)$ and radius $\sqrt{a^2 + b^2}$.</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Important Tangent Properties</span></div>
+      <div class="it b"><i class="s1"></i> <span class="r">Product of Perpendiculars</span> from foci $S, S'$ onto ANY tangent is constant: <span class="box" style="--bc:#d4202c">$p_1 \cdot p_2 = b^2$</span>!</div>
+      <div class="it b"><i class="s1"></i> Feet of perpendiculars from foci onto any tangent lie on <span class="box" style="--bc:#1d3fae">Auxiliary Circle: $x^2 + y^2 = a^2$</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.7</u> : <span class="k" style="font-weight:400">Find tangents to $x^2 + 4y^2 = 4$ having slope $m = 1$.</span></div>
+      <div class="b">Standard form: $\dfrac{x^2}{4} + \dfrac{y^2}{1} = 1 \implies a^2 = 4, b^2 = 1$. With $m = 1$:</div>
+      <div class="g">$c = \pm \sqrt{a^2 m^2 + b^2} = \pm \sqrt{4(1)^2 + 1} = \pm \sqrt{5}$.</div>
+      <div class="it r">Tangents: <span class="circ" style="--bc:#d4202c">$y = x \pm \sqrt{5}$</span> $\implies x - y \pm \sqrt{5} = 0$.</div>
+    </div>
+    <div class="pno">8</div>
+  </div>
+</section>
+
+<!-- PAGE 9: NORMALS & CHORDS OF ELLIPSE -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Equations of Normals to Ellipse</span></div>
+      <div class="it2 r" style="font-weight:700">1. Point Form ($x_1, y_1$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#d4202c">$\dfrac{a^2 x}{x_1} - \dfrac{b^2 y}{y_1} = a^2 - b^2$</span></span></div>
+      <div class="it2 r" style="font-weight:700">2. Parametric Form ($	heta$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#1d3fae">$ax\sec\theta - by\csc\theta = a^2 - b^2$</span></span></div>
+      <div class="it2 r" style="font-weight:700">3. Slope Form ($m$): <span class="b">$y = mx - \dfrac{m(a^2 - b^2)}{\sqrt{a^2 + b^2 m^2}}$</span></div>
+      <div class="it2 g"><span class="note">At most 4 normals can be drawn from an external point to an ellipse.</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Chords of Ellipse</span></div>
+      <div class="it2 r" style="font-weight:700">1. Chord joining $\theta_1$ and $\theta_2$:</div>
+      <div class="b"><i class="s1"></i> $\dfrac{x}{a}\cos\left(\dfrac{\theta_1 + \theta_2}{2}\right) + \dfrac{y}{b}\sin\left(\dfrac{\theta_1 + \theta_2}{2}\right) = \cos\left(\dfrac{\theta_1 - \theta_2}{2}\right)$</div>
+      <div class="it2 g"><span class="note">If this chord passes through focus $(ae, 0)$, then: $\tan(\theta_1/2) \cdot \tan(\theta_2/2) = \dfrac{e - 1}{e + 1}$.</span></div>
+      <div class="it2 r" style="font-weight:700">2. Chord of Contact ($T = 0$): <span class="b">$\dfrac{x x_1}{a^2} + \dfrac{y y_1}{b^2} = 1$</span></div>
+      <div class="it2 r" style="font-weight:700">3. Chord with Midpoint $(x_1, y_1)$: <span class="b"><i class="s2"></i> <span class="box" style="--bc:#0a6428">$T = S_1$</span></span> $\implies \dfrac{x x_1}{a^2} + \dfrac{y y_1}{b^2} = \dfrac{x_1^2}{a^2} + \dfrac{y_1^2}{b^2}$</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Reflection Property of Ellipse</span></div>
+      <div class="k">A ray emanating from one focus $S$, after reflection from the inner surface of the ellipse, passes through the other focus $S'$.</div>
+      <div class="it2 g"><span class="note">Normal at point $P$ is internal bisector of $\angle SPS'$, and tangent is external bisector!</span></div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.8</u> : <span class="k" style="font-weight:400">Find equation of normal to $\dfrac{x^2}{16} + \dfrac{y^2}{9} = 1$ at $(2, 3\sqrt{3}/2)$.</span></div>
+      <div class="b">Here $\theta = \pi/3$. Using parametric form: $ax\sec\theta - by\csc\theta = a^2 - b^2$:</div>
+      <div class="g">$4x\sec(\pi/3) - 3y\csc(\pi/3) = 16 - 9 = 7 \implies 4x(2) - 3y(2/\sqrt{3}) = 7$.</div>
+      <div class="it r"><span class="circ" style="--bc:#d4202c">$8x - 2\sqrt{3}y - 7 = 0$</span>.</div>
+    </div>
+    <div class="pno">9</div>
+  </div>
+</section>
+
+<!-- PAGE 10: HYPERBOLA STANDARD EQUATION & CONJUGATE HYPERBOLA -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Hyperbola: Standard Equation & Terminology</span></div>
+      <div class="k">Standard equation: $\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1$ ($e > 1$).</div>
+      <div style="margin-top:4px">
+        <table class="m">
+          <tr style="font-weight:700" class="r"><td>Feature</td><td>Standard: $\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1$</td><td>Conjugate: $-\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1$</td></tr>
+          <tr><td class="b">Eccentricity ($e$)</td><td>$b^2 = a^2(e^2 - 1) \implies e = \sqrt{1 + b^2/a^2}$</td><td>$a^2 = b^2(e'^2 - 1) \implies e' = \sqrt{1 + a^2/b^2}$</td></tr>
+          <tr><td class="b">Foci ($S, S'$)</td><td>$(\pm ae, 0)$</td><td>$(0, \pm be')$</td></tr>
+          <tr><td class="b">Directrices</td><td>$x = \pm \dfrac{a}{e}$</td><td>$y = \pm \dfrac{b}{e'}$</td></tr>
+          <tr><td class="b">Latus Rectum ($LR$)</td><td>$\dfrac{2b^2}{a}$</td><td>$\dfrac{2a^2}{b}$</td></tr>
+          <tr><td class="b">Focal Distance Diff.</td><td><span class="box" style="--bc:#d4202c">$|SP - S'P| = 2a$</span></td><td><span class="box" style="--bc:#d4202c">$|SP - S'P| = 2b$</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Relation Between Eccentricities of Conjugate Hyperbolas</span></div>
+      <div class="k">If $e$ and $e'$ are eccentricities of a hyperbola and its conjugate hyperbola:</div>
+      <div class="fr r" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$\dfrac{1}{e^2} + \dfrac{1}{e'^2} = 1$</span></div>
+      <div class="it2 g"><span class="note">Super frequent direct JEE formula! If $e = 2$, then $1/e'^2 = 1 - 1/4 = 3/4 \implies e' = 2/\sqrt{3}$.</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Parametric Coordinates of Hyperbola</span></div>
+      <div class="k">Point on $\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1$: <span class="box" style="--bc:#1d3fae">$P(\theta) \equiv (a\sec\theta, \; b\tan\theta)$</span>, $\theta \in [0, 2\pi) \setminus \{\pi/2, 3\pi/2\}$.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.9</u> : <span class="k" style="font-weight:400">If eccentricity of $\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1$ is $e = 5/4$, find eccentricity of conjugate.</span></div>
+      <div class="b">Using $\dfrac{1}{e^2} + \dfrac{1}{e'^2} = 1 \implies \dfrac{16}{25} + \dfrac{1}{e'^2} = 1 \implies \dfrac{1}{e'^2} = \dfrac{9}{25}$.</div>
+      <div class="it r">Thus $e'^2 = \dfrac{25}{9} \implies e' =$ <span class="circ" style="--bc:#d4202c">$\dfrac{5}{3}$</span>.</div>
+    </div>
+    <div class="pno">10</div>
+  </div>
+</section>
+
+<!-- PAGE 11: HYPERBOLA TANGENTS & NORMALS -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Tangents to Hyperbola ($dfrac{x^2}{a^2} - dfrac{y^2}{b^2} = 1$)</span></div>
+      <div class="it2 r" style="font-weight:700">1. Condition of Tangency: <span class="k" style="font-weight:400">Line $y = mx + c$ is tangent iff</span> <span class="box" style="--bc:#d4202c">$c^2 = a^2 m^2 - b^2$</span></div>
+      <div class="it2 g"><span class="note">Requires $|m| > b/a$ for real tangents! If $|m| = b/a$, line is parallel to asymptotes.</span></div>
+      <div class="it2 r" style="font-weight:700">2. Slope Form: <span class="b"><i class="s2"></i> <span class="box" style="--bc:#1d3fae">$y = mx \pm \sqrt{a^2 m^2 - b^2}$</span></span></div>
+      <div class="it2 r" style="font-weight:700">3. Parametric Form ($	heta$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#d4202c">$\dfrac{x\sec\theta}{a} - \dfrac{y\tan\theta}{b} = 1$</span></span></div>
+      <div class="it2 r" style="font-weight:700">4. Point Form ($x_1, y_1$): <span class="b">$T = 0 \implies \dfrac{x x_1}{a^2} - \dfrac{y y_1}{b^2} = 1$</span></div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Director Circle of Hyperbola</span></div>
+      <div class="k">Locus of point of intersection of two perpendicular tangents:</div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$x^2 + y^2 = a^2 - b^2$</span></div>
+      <div class="it"><span class="b">If $a > b$:</span> Real circle with radius $\sqrt{a^2 - b^2}$.</div>
+      <div class="it"><span class="b">If $a = b$:</span> Point circle $(0, 0)$ (tangents only intersect perpendicularly at origin).</div>
+      <div class="it"><span class="b">If $a < b$:</span> No real perpendicular tangents exist (imaginary director circle).</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Normals to Hyperbola</span></div>
+      <div class="it2 r" style="font-weight:700">1. Point Form ($x_1, y_1$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#d4202c">$\dfrac{a^2 x}{x_1} + \dfrac{b^2 y}{y_1} = a^2 + b^2$</span></span></div>
+      <div class="it2 r" style="font-weight:700">2. Parametric Form ($	heta$): <span class="b"><i class="s2"></i> <span class="box" style="--bc:#1d3fae">$ax\cos\theta + by\cot\theta = a^2 + b^2$</span></span></div>
+      <div class="it2 r" style="font-weight:700">3. Slope Form ($m$): <span class="b">$y = mx \pm \dfrac{m(a^2 + b^2)}{\sqrt{a^2 - b^2 m^2}}$</span></div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.9b</u> : <span class="k" style="font-weight:400">Tangent to $\dfrac{x^2}{9} - \dfrac{y^2}{4} = 1$ with slope $m = 2$:</span></div>
+      <div class="b">$c = \pm \sqrt{a^2 m^2 - b^2} = \pm \sqrt{9(4) - 4} = \pm \sqrt{32} = \pm 4\sqrt{2}$. Tangent: <span class="circ" style="--bc:#d4202c">$y = 2x \pm 4\sqrt{2}$</span>.</div>
+    </div>
+    <div class="pno">11</div>
+  </div>
+</section>
+
+<!-- PAGE 12: ASYMPTOTES & RECTANGULAR HYPERBOLA -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Asymptotes of Hyperbola</span></div>
+      <div class="k">Straight lines passing through center and tangent to hyperbola at infinity:</div>
+      <div class="fr b" style="text-align:center"><i class="s2"></i> <span class="box blk" style="--bc:#d4202c;text-align:center">$y = \pm \dfrac{b}{a}x \iff \dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 0$</span></div>
+      <div class="it b"><i class="s1"></i> Angle between asymptotes: <span class="box" style="--bc:#1d3fae">$2\theta = 2\tan^{-1}(b/a) = 2\sec^{-1}(e)$</span>.</div>
+      <div class="it b"><i class="s1"></i> <span class="r">Differs by Constant Rule:</span> For any hyperbola $H$, its asymptotes $A$, and conjugate $C$:</div>
+      <div class="fr g" style="text-align:center"><span class="box" style="--bc:#0a6428">$H + C = 2A$</span> $\implies (H - A) + (C - A) = 0$ <span class="note">(They differ only in constant term!)</span></div>
+      <div class="it b"><i class="s1"></i> Product of perpendiculars from ANY point on hyperbola to asymptotes: <span class="box" style="--bc:#d4202c">$\dfrac{a^2 b^2}{a^2 + b^2}$</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Rectangular Hyperbola ($a = b \iff e = \sqrt{2}$)</span></div>
+      <div class="k">Asymptotes are perpendicular ($x^2 - y^2 = 0 \implies y = \pm x$).</div>
+      <div class="it2 r" style="font-weight:700">Rotated Form: <span class="box" style="--bc:#d4202c">$xy = c^2$</span> <span class="k" style="font-weight:400">(Axes rotated by $45^\circ$, $c^2 = a^2/2$)</span></div>
+      <div class="it b"><i class="s1"></i> Parametric point: <span class="box" style="--bc:#1d3fae">$P(t) \equiv \left(ct, \; \dfrac{c}{t}\right)$</span>, $t \neq 0$.</div>
+      <div class="it b"><i class="s1"></i> Tangent at $t$: <span class="box" style="--bc:#d4202c">$x + yt^2 = 2ct$</span> $\iff \dfrac{x}{t} + yt = 2c$.</div>
+      <div class="it2 g"><span class="note">Intercepts on axes: $A(2ct, 0)$ and $B(0, 2c/t)$. Area of $\triangle OAB = \dfrac{1}{2}(2ct)(2c/t) = 2c^2$ (Constant!). Point $P$ bisects $AB$!</span></div>
+      <div class="it b"><i class="s1"></i> Normal at $t$: <span class="box" style="--bc:#0a6428">$xt^3 - yt = ct^4 - c$</span>.</div>
+    </div>
+    <div class="sec">
+      <div class="r" style="font-weight:700"><u>Ex.10</u> : <span class="k" style="font-weight:400">If a triangle has vertices on $xy = c^2$, where does its orthocenter lie?</span></div>
+      <div class="b">Let vertices be $t_1, t_2, t_3$. Orthocenter is $H\left(-\dfrac{c}{t_1 t_2 t_3}, \; -c t_1 t_2 t_3\right)$.</div>
+      <div class="it r">Notice: $x_H \cdot y_H = (-c/T)(-cT) = c^2 \implies$ <span class="circ" style="--bc:#d4202c">Orthocenter also lies on the hyperbola!</span></div>
+    </div>
+    <div class="pno">12</div>
+  </div>
+</section>
+
+<!-- PAGE 13: COMMON TANGENTS, INTERSECTIONS & JEE SHORTCUTS -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Common Tangents Across Different Conics</span></div>
+      <div class="k">Systematic recipe to find common tangent between two curves:</div>
+      <div class="it b">1. Write slope-form tangent of Conic 1: e.g. for $y^2 = 4ax \implies y = mx + a/m$.</div>
+      <div class="it b">2. Apply condition of tangency for Conic 2:</div>
+      <div class="it2 g">$\to$ For circle $x^2 + y^2 = r^2$: perpendicular distance from center $= r \implies \dfrac{|a/m|}{\sqrt{1+m^2}} = r$.</div>
+      <div class="it2 g">$\to$ For ellipse $x^2/A^2 + y^2/B^2 = 1$: equate $c^2 \implies (a/m)^2 = A^2 m^2 + B^2$.</div>
+      <div class="it b">3. Solve the polynomial for $m$, then write the lines.</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Pole and Polar</span></div>
+      <div class="k">For point $P(x_1, y_1)$ (Pole), its Polar with respect to any conic $S = 0$ is <span class="box" style="--bc:#d4202c">$T = 0$</span>.</div>
+      <div class="it b"><i class="s1"></i> If $P$ is outside, Polar is the <span class="r">Chord of Contact</span>.</div>
+      <div class="it b"><i class="s1"></i> If $P$ is on the curve, Polar is the <span class="g">Tangent</span>.</div>
+      <div class="it b"><i class="s1"></i> Polar of Focus is the <span class="box" style="--bc:#1d3fae">Directrix</span>!</div>
+      <div class="it b"><i class="s1"></i> Conjugate Points: If polar of $P$ passes through $Q$, then polar of $Q$ passes through $P$.</div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Summary of Standard Eccentricities & Director Circles</span></div>
+      <table class="m">
+        <tr style="font-weight:700" class="r"><td>Conic</td><td>Equation</td><td>Eccentricity ($e$)</td><td>Director Circle</td></tr>
+        <tr><td class="b">Parabola</td><td>$y^2 = 4ax$</td><td>$e = 1$</td><td>$x + a = 0$ (Directrix)</td></tr>
+        <tr><td class="b">Ellipse</td><td>$x^2/a^2 + y^2/b^2 = 1$</td><td>$\sqrt{1 - b^2/a^2} < 1$</td><td>$x^2 + y^2 = a^2 + b^2$</td></tr>
+        <tr><td class="b">Hyperbola</td><td>$x^2/a^2 - y^2/b^2 = 1$</td><td>$\sqrt{1 + b^2/a^2} > 1$</td><td>$x^2 + y^2 = a^2 - b^2$ ($a > b$)</td></tr>
+        <tr><td class="b">Rect. Hyp.</td><td>$xy = c^2$</td><td>$e = \sqrt{2}$</td><td>Point $(0,0)$ (origin)</td></tr>
+      </table>
+    </div>
+    <div class="pno">13</div>
+  </div>
+</section>
+
+<!-- PAGE 14: GOOD QUESTIONS (MAIN & ADVANCED) -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h" style="margin-bottom:0"><span class="hash">#</span><span class="ul">Good Ques. (JEE Main Style)</span></div>
+      <div class="q-row">
+        <div class="q-text"><b>Q1.</b> For parabola $y^2 = 8x$, find the length of the focal chord having one extremity at $(2, 4)$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : 8</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q2.</b> Find the locus of point of intersection of two perpendicular tangents to parabola $y^2 = 12x$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : $x + 3 = 0$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q3.</b> For ellipse $\dfrac{x^2}{16} + \dfrac{y^2}{7} = 1$, find the distance between its two foci.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : 6</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q4.</b> Find area of rectangle formed by ends of latera recta of ellipse $\dfrac{x^2}{25} + \dfrac{y^2}{9} = 1$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : $\dfrac{144}{5}$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q5.</b> If eccentricity of hyperbola $\dfrac{x^2}{9} - \dfrac{y^2}{16} = 1$ is $e$, find eccentricity of its conjugate.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : $\dfrac{5}{4}$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q6.</b> Find the common tangent to parabola $y^2 = 4x$ and parabola $x^2 = -32y$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : $x - 2y + 4 = 0$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q7.</b> Find equation of normal to $y^2 = 4x$ at point $(4, 4)$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : $2x + y = 12$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q8.</b> What is the eccentricity of the rectangular hyperbola $xy = 16$?</div>
+        <div class="q-ans"><span class="box" style="--bc:#1d3fae">Ans : $\sqrt{2}$</span></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="h" style="margin-bottom:0"><span class="hash">#</span><span class="ul">Good Ques. (JEE Adv Style)</span></div>
+      <div class="q-row">
+        <div class="q-text"><b>Q1.</b> Normals at 3 points on $y^2 = 4ax$ meet at $(h, k)$. Find centroid of triangle formed by the feet.</div>
+        <div class="q-ans"><span class="box" style="--bc:#d4202c">Ans : $\left(\dfrac{2h - 4a}{3}, 0\right)$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q2.</b> Find common tangent to ellipses $\dfrac{x^2}{16} + \dfrac{y^2}{9} = 1$ and $\dfrac{x^2}{9} + \dfrac{y^2}{16} = 1$ in 1st quadrant.</div>
+        <div class="q-ans"><span class="box" style="--bc:#d4202c">Ans : $x + y = 5$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q3.</b> An ellipse has foci at $(0, 2)$ and $(0, -2)$ and length of minor axis is 4. Find length of major axis.</div>
+        <div class="q-ans"><span class="box" style="--bc:#d4202c">Ans : $4\sqrt{2}$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q4.</b> Find the length of the common chord of parabola $y^2 = 4x$ and circle $x^2 + y^2 = 12$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#d4202c">Ans : $4\sqrt{2}$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q5.</b> Find product of perpendiculars from any point on $\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1$ to its asymptotes.</div>
+        <div class="q-ans"><span class="box" style="--bc:#d4202c">Ans : $\dfrac{a^2 b^2}{a^2 + b^2}$</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-text"><b>Q6.</b> Tangent at $P(ct, c/t)$ to $xy = c^2$ meets axes at $A$ and $B$. Find area of $\triangle OAB$.</div>
+        <div class="q-ans"><span class="box" style="--bc:#d4202c">Ans : $2c^2$</span></div>
+      </div>
+    </div>
+    <div class="pno">14</div>
+  </div>
+</section>
+
+<!-- PAGE 15: KAUNSA METHOD LAGAUN, LAST MINUTE STRIP & COMMON GALTIYAN -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Kaunsa Method Lagaun ?</span></div>
+      <table class="m">
+        <tr style="font-weight:700" class="r"><td>Jab question me yeh dikhe...</td><td>Toh direct yeh method lagao !</td></tr>
+        <tr><td class="b">Common tangent between 2 conics</td><td class="r">$\Rightarrow$ Slope form $y = mx + c$ likho aur dusre conic ki tangency condition se $m$ nikaalo.</td></tr>
+        <tr><td class="b">Chord with given midpoint $(x_1, y_1)$</td><td class="r">$\Rightarrow$ Seedha <span class="box" style="--bc:#d4202c">$T = S_1$</span> lagao (Parabola, Ellipse, Hyperbola sabke liye valid!).</td></tr>
+        <tr><td class="b">Focal chord property / length</td><td class="r">$\Rightarrow$ Parametric formula $t_1 t_2 = -1$ aur length $= a(t + 1/t)^2 = 4a\csc^2\theta$.</td></tr>
+        <tr><td class="b">Locus of intersection of $\perp$ tangents</td><td class="r">$\Rightarrow$ Director circle: Parabola $\to x+a=0$, Ellipse $\to x^2+y^2=a^2+b^2$, Hyp $\to x^2+y^2=a^2-b^2$.</td></tr>
+        <tr><td class="b">Normals from point $(h, k)$ to parabola</td><td class="r">$\Rightarrow$ Cubic $am^3 + (2a-h)m + k = 0$ banao, $\sum m_i = 0$ aur $\sum y_i = 0$ use karo.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Last Minute Formula Strip</span></div>
+      <div class="strip-grid">
+        <div class="strip-box">
+          <div class="r" style="font-weight:700">Parabola Tangent</div>
+          <div class="b">$y = mx + \dfrac{a}{m}$</div>
+          <div class="g small">$P = (a/m^2, 2a/m)$</div>
+        </div>
+        <div class="strip-box">
+          <div class="r" style="font-weight:700">Parabola Normal</div>
+          <div class="b">$y = mx - 2am - am^3$</div>
+          <div class="g small">Foot $= (am^2, -2am)$</div>
+        </div>
+        <div class="strip-box">
+          <div class="r" style="font-weight:700">Ellipse Tangent</div>
+          <div class="b">$y = mx \pm \sqrt{a^2 m^2 + b^2}$</div>
+          <div class="g small">Director: $x^2+y^2=a^2+b^2$</div>
+        </div>
+        <div class="strip-box">
+          <div class="r" style="font-weight:700">Hyperbola Tangent</div>
+          <div class="b">$y = mx \pm \sqrt{a^2 m^2 - b^2}$</div>
+          <div class="g small">Director: $x^2+y^2=a^2-b^2$</div>
+        </div>
+        <div class="strip-box">
+          <div class="r" style="font-weight:700">Conjugate Hyp. $e$</div>
+          <div class="b">$\dfrac{1}{e^2} + \dfrac{1}{e'^2} = 1$</div>
+          <div class="g small">Direct formula!</div>
+        </div>
+        <div class="strip-box">
+          <div class="r" style="font-weight:700">Rect. Hyp. $xy=c^2$</div>
+          <div class="b">$x + yt^2 = 2ct$</div>
+          <div class="g small">Area $\triangle OAB = 2c^2$</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="h"><span class="hash">#</span><span class="ul">Dhyan Rakho ! (Common Galtiyan)</span></div>
+      <div class="it r"><i class="s1"></i> <b>Vertical Parabola / Ellipse Trap:</b> Parabola $x^2 = 4ay$ me tangent $y = mx - am^2$ hoti hai, $y = mx + a/m$ mat laga dena!</div>
+      <div class="it r"><i class="s1"></i> <b>Hyperbola Tangent Slope Condition:</b> Hyperbola me real tangent ke liye $|m| > b/a$ hona zaroori hai. Agar $|m| \le b/a$, koi tangent exist nahi karti!</div>
+      <div class="it r"><i class="s1"></i> <b>Focal Distance Definition:</b> Ellipse me sum $SP + S'P = 2a$ hota hai, jabki Hyperbola me difference $|SP - S'P| = 2a$ hota hai.</div>
+      <div class="it r"><i class="s1"></i> <b>Director Circle of Hyperbola:</b> Agar $a < b$ ho, toh hyperbola ka koi real director circle nahi hota (radius $\sqrt{a^2 - b^2}$ imaginary ho jati hai)!</div>
+    </div>
+    <div class="pno">15</div>
+  </div>
+</section>
+
+<!-- PAGE 16: HINTS & ADVANCED ME KYA DHYAN RAKHEIN -->
+<section class="page">
+  <div class="inner">
+    <div class="sec">
+      <div class="h" style="margin-bottom:2px"><span class="hash">#</span><span class="ul">Hints (Separately for JEE Main Questions)</span></div>
+      <div class="hint-it g"><b class="r">Q1.</b> $a = 2, 2at = 4 \implies t = 1$. Use $L = a(t + 1/t)^2 = 2(1 + 1)^2 = 8$.</div>
+      <div class="hint-it g"><b class="r">Q2.</b> Locus of perpendicular tangents is directrix $x = -a$. Here $4a = 12 \implies a = 3 \implies x + 3 = 0$.</div>
+      <div class="hint-it g"><b class="r">Q3.</b> $a^2 = 16, b^2 = 7 \implies e = \sqrt{1 - 7/16} = 3/4$. Distance between foci $= 2ae = 2(4)(3/4) = 6$.</div>
+      <div class="hint-it g"><b class="r">Q4.</b> Ends of latera recta are $(\pm ae, \pm b^2/a)$. Area $= 2ae \times 2b^2/a = 8 \times 18/5 = 144/5$.</div>
+      <div class="hint-it g"><b class="r">Q5.</b> $e^2 = 1 + 16/9 = 25/9$. Use $1/e^2 + 1/e'^2 = 1 \implies 1/e'^2 = 16/25 \implies e' = 5/4$.</div>
+      <div class="hint-it g"><b class="r">Q6.</b> Tangent $y = mx + 1/m$. Put in $x^2 = -32y$, $D = 0 \implies m = 1/2 \implies x - 2y + 4 = 0$.</div>
+      <div class="hint-it g"><b class="r">Q7.</b> Here $a = 1, t = 2$. Normal is $y + tx = 2at + at^3 \implies y + 2x = 4 + 8 = 12$.</div>
+      <div class="hint-it g"><b class="r">Q8.</b> In rectangular hyperbola asymptotes are perpendicular $\implies e = \sqrt{2}$.</div>
+    </div>
+    <div class="sec">
+      <div class="h" style="margin-bottom:2px"><span class="hash">#</span><span class="ul">Hints (Separately for JEE Advanced Questions)</span></div>
+      <div class="hint-it g"><b class="r">Q1.</b> Feet are $(am_i^2, -2am_i)$. $\sum m_i = 0 \implies y_G = 0$. $x_G = \frac{a}{3}(\sum m_i^2) = \frac{a}{3}(-2\sum m_1 m_2) = \frac{2h-4a}{3}$.</div>
+      <div class="hint-it g"><b class="r">Q2.</b> For ellipse 1: $c^2 = 16m^2 + 9$. For ellipse 2: $c^2 = 9m^2 + 16$. Equating gives $m = -1, c = 5 \implies x + y = 5$.</div>
+      <div class="hint-it g"><b class="r">Q3.</b> Foci on $Y$-axis $\implies be = 2, a = 2$. $a^2 = b^2 - (be)^2 \implies 4 = b^2 - 4 \implies b = 2\sqrt{2} \implies 2b = 4\sqrt{2}$.</div>
+      <div class="hint-it g"><b class="r">Q4.</b> Put $y^2 = 4x$ into $x^2 + 4x - 12 = 0 \implies x = 2 \implies y = \pm 2\sqrt{2}$. Chord length $= 4\sqrt{2}$.</div>
+      <div class="hint-it g"><b class="r">Q5.</b> Asymptotes are $bx \pm ay = 0$. Product of distances is $\frac{|b^2 x^2 - a^2 y^2|}{b^2 + a^2} = \frac{a^2 b^2}{a^2 + b^2}$.</div>
+      <div class="hint-it g"><b class="r">Q6.</b> Tangent $x + yt^2 = 2ct$. Intercepts are $A(2ct, 0), B(0, 2c/t)$. Area $= \frac{1}{2}(2ct)(2c/t) = 2c^2$.</div>
+    </div>
+    <div class="sec">
+      <div class="h" style="margin-bottom:2px"><span class="hash">#</span><span class="ul">Advanced Me Kya Dhyan Rakhein</span></div>
+      <div class="it b"><i class="s2"></i> <span class="r">Parametric form over Cartesian:</span> Variable tangents or chords me parameter $t$ or $\theta$ use karo. Calculations $3\times$ fast ho jaati hain!</div>
+      <div class="it b"><i class="s2"></i> <span class="r">Homogenization Shortcut:</span> Chord subtending $90^\circ$ at origin? Homogenize conic with line $lx + my = 1$ and set coeff($x^2$) + coeff($y^2$) $= 0$.</div>
+      <div class="it b"><i class="s2"></i> <span class="r">Auxiliary Circle & Projection:</span> Ellipse area/tangent problems ko auxiliary circle par project karke solve karo ($\text{Area}_{\text{ellipse}} = \frac{b}{a} \times \text{Area}_{\text{circle}}$).</div>
+    </div>
+    <div class="pno">16</div>
+  </div>
+</section>
+
+<script src="node_modules/katex/dist/katex.min.js"></script>
+<script src="node_modules/katex/dist/contrib/auto-render.min.js"></script>
+<script>
+(function(){
+ function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+ const NS='http://www.w3.org/2000/svg';
+ function mk(el,d,sw,col){const s=document.createElementNS(NS,'svg');s.setAttribute('class','ov');
+   const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke',col);
+   p.setAttribute('stroke-width',sw);p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');s.appendChild(p);el.appendChild(s);}
+ function line(pts,r,j){let o='';pts.forEach((q,i)=>{o+=(i?'L':'M')+(q[0]+(r()-.5)*j).toFixed(1)+' '+(q[1]+(r()-.5)*j).toFixed(1)});return o;}
+ function seg(a,b,r){const n=Math.max(2,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/14));const o=[];for(let i=0;i<=n;i++){o.push([a[0]+(b[0]-a[0])*i/n,a[1]+(b[1]-a[1])*i/n]);}return o;}
+ function rectPath(w,h,r){const c=()=> (r()-.5)*3;const e=0;
+   const tl=[-e+c(),-e+c()],tr=[w+e+c(),-e+c()],br=[w+e+c(),h+e+c()],bl=[-e+c(),h+e+c()];
+   const pts=[].concat(seg(tl,tr,r),seg(tr,br,r),seg(br,bl,r),seg(bl,[tl[0]+(r()*3),tl[1]+4+r()*3],r));
+   return line(pts,r,1.3);}
+ function ellPath(w,h,r){const cx=w/2,cy=h/2,rx=w/2+6,ry=h/2+3;const N=44;const o=[];const st=r()*0.5;
+   for(let i=0;i<=N;i++){const t=st+i/N*Math.PI*2*1.07;const k=1+i/N*0.07+(r()-.5)*0.025;o.push([cx+Math.cos(t)*rx*k,cy+Math.sin(t)*ry*k]);}
+   return line(o,r,0.6);}
+ function underPath(w,h,r){const y=h-2;const o=[];const n=Math.max(3,Math.round(w/18));for(let i=0;i<=n;i++)o.push([ -2+(w+4)*i/n, y+(r()-.5)*1.6+(i/n)*1.5]);return line(o,r,0.5);}
+ function starSvg(n,r){let h='';for(let i=0;i<n;i++){const rot=(r()*20-10).toFixed(0);
+   h+='<svg class="st" viewBox="0 0 24 24" style="transform:rotate('+rot+'deg)"><path d="M12 2 L14.8 9 L22 9.4 L16.4 14 L18.3 21.5 L12 17.4 L5.7 21.5 L7.6 14 L2 9.4 L9.2 9 Z"/></svg>';}
+  return h;}
+ function run(){
+  renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
+  const R=rng(7);
+  document.querySelectorAll('i.s1').forEach(e=>{e.outerHTML=starSvg(1,R)});
+  document.querySelectorAll('i.s2').forEach(e=>{e.outerHTML=starSvg(2,R)});
+  document.fonts.ready.then(()=>{
+   const r=rng(21);
+   document.querySelectorAll('.box').forEach(e=>{const w=e.offsetWidth,h=e.offsetHeight;
+     mk(e,rectPath(w,h,r),1.8,getComputedStyle(e).getPropertyValue('--bc')||'#1d3fae');});
+   document.querySelectorAll('.circ').forEach(e=>{const w=e.offsetWidth,h=e.offsetHeight;
+     mk(e,ellPath(w,h,r),1.7,getComputedStyle(e).getPropertyValue('--bc')||'#d4202c');});
+   document.querySelectorAll('.ul').forEach(e=>{const w=e.offsetWidth,h=e.offsetHeight;
+     const col=e.closest('.title')?'#d4202c':getComputedStyle(e).color;
+     mk(e,underPath(w,h,r),e.closest('.title')?2.4:1.8,col);});
+   const t=rng(5);
+   document.querySelectorAll('.inner .sec > div, .inner .sec > table').forEach(e=>{e.style.transform='rotate('+((t()-.5)*0.45).toFixed(2)+'deg)';e.style.transformOrigin='left center';});
+   document.body.setAttribute('data-ready','1');
+  });
+ }
+ window.addEventListener('load',run);
+})();
+</script>
+</body>
+</html>
